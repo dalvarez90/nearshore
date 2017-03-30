@@ -1,0 +1,25 @@
+variables:
+  eureka:
+    host: localhost
+    port: 8761
+info:
+  component: Catalogs microservice (nearshore-catalogsms)
+server:
+  port: 7701
+spring:
+  config:
+    name: nearshore-catalogsms
+  application:
+    name: nearshore-catalogsms
+
+logging:
+  level:
+    com.banamex.nearshore: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${variables.eureka.host}:${variables.eureka.port}/eureka/
+    registerWithEureka: true
+  instance:
+    preferIpAddress: true
+    
