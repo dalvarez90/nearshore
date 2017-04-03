@@ -22,7 +22,7 @@ import com.banamex.nearshore.util.ResultBase;
 public class DominiosController {
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
@@ -31,7 +31,7 @@ public class DominiosController {
 		requestParams.put("tipoQuery", 2);
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_DOMINIO");
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		
 		return resultBase;
 	}
@@ -51,7 +51,7 @@ public class DominiosController {
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_DOMINIO WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		
 		return resultBase;
 	}
@@ -77,7 +77,7 @@ public class DominiosController {
 		requestParams.put("sql", "INSERT INTO CAT_DOMINIO (Id, Descripcion) VALUES (?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		
 		return resultBase;
 	}
@@ -103,7 +103,7 @@ public class DominiosController {
 		requestParams.put("sql", "UPDATE CAT_DOMINIO SET Descripcion = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		
 		return resultBase;
 	}
@@ -123,7 +123,7 @@ public class DominiosController {
 		requestParams.put("sql", "DELETE FROM CAT_DOMINIO WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		
 		return resultBase;
 	}
