@@ -29,7 +29,7 @@ public class PerfilesController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT ID:Perfil, DESCRIPCION FROM CAT_PERFIL");
+		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL");
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
 		
