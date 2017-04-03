@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Dominio;
-import com.banamex.nearshore.client.DatabaseClientService;
+import com.banamex.nearshore.client.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.util.Data;
 import com.banamex.nearshore.util.ResultBase;
 
@@ -22,7 +22,7 @@ import com.banamex.nearshore.util.ResultBase;
 public class DominiosController {
 	
 	@Autowired
-	private DatabaseClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
@@ -129,7 +129,7 @@ public class DominiosController {
 	}
 	
 	@FeignClient(name = "mcTDCdbMain")
-	public interface DatabaseMicroServiceClient {
+	public interface DatabaseMicroserviceClient {
 		
 		@RequestMapping(value = "/getResultBD", method = RequestMethod.POST, produces = "application/json")
 		public ResultBase getResultQuery(@RequestBody HashMap<String, Object> datos);
