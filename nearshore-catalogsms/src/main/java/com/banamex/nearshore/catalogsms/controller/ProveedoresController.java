@@ -19,7 +19,7 @@ import com.banamex.nearshore.util.ResultBase;
 
 @RestController
 @RequestMapping("proveedores")
-public class ProovedoresController {
+public class ProveedoresController {
 
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
