@@ -1,4 +1,4 @@
-package com.banamex.nearshore.client;
+package com.banamex.nearshore.databasems;
 
 import java.util.HashMap;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.banamex.nearshore.catalogsms.controller.DominiosController.DatabaseMicroserviceClient;
-import com.banamex.nearshore.util.ResultBase;
 
 @Service
 public class DatabaseMicroserviceClientService {

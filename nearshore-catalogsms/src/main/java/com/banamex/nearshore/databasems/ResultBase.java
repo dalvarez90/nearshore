@@ -1,4 +1,4 @@
-package com.banamex.nearshore.util;
+package com.banamex.nearshore.databasems;
 
 import java.util.ArrayList;
 import java.util.HashMap;
