@@ -1,6 +1,6 @@
 package com.banamex.nearshore.catalogsms.domain;
 
-public class Perfil {
+public class PuestoCiti {
 
 	private Integer id;
 	private String descripcion;
@@ -20,5 +20,5 @@ public class Perfil {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	
 }

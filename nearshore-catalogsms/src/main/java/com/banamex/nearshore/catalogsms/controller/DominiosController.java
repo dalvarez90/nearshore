@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Dominio;
-import com.banamex.nearshore.client.DatabaseMicroserviceClientService;
-import com.banamex.nearshore.util.Data;
-import com.banamex.nearshore.util.ResultBase;
+import com.banamex.nearshore.databasems.Data;
+import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
+import com.banamex.nearshore.databasems.ResultBase;
 
 @RestController
 @RequestMapping("dominios")

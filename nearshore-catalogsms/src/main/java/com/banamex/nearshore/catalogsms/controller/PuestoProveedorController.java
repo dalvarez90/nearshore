@@ -12,128 +12,126 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banamex.nearshore.catalogsms.domain.Dominio;
+import com.banamex.nearshore.catalogsms.domain.Proveedor;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
 
+
 @RestController
-@RequestMapping("perfiles")
-public class PerfilesController {
+@RequestMapping("puestos/proveedores")
+public class PuestoProveedorController {
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
-	
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveAllDomains() {
-		HashMap<String, Object> requestParams = new HashMap<String, Object>();
-		
+	public Object retrieveAllPuestosCiti() {
+		HashMap<String, Object> requestParams = new HashMap<>();
+
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL");
-		
-		Object resultBase = databaseClientService.callBase(requestParams);
-		
-		return resultBase;
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTO_PROVEEDOR");
+		Object resp = databaseMicroserviceClientService.callBase(requestParams);
+		return resp;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveDomainById(@PathVariable Integer id) {
-		HashMap<String, Object> requestParams = new HashMap<String, Object>();
-		
+	public Object retrievePuestoCitiById(@PathVariable Integer id) {
+
+		HashMap<String, Object> requestParams = new HashMap<>();
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
-		
+
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL WHERE ID_Perfil = ?");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTO_PROVEEDOR WHERE ID = ?");
 		requestParams.put("data", queryParams);
-		
-		Object resultBase = databaseClientService.callBase(requestParams);
-		
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		return resultBase;
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-	public Object newDomain(@RequestBody Dominio dominio) {
+	public Object newProveedor(@RequestBody Proveedor proveedor) {
+
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
-		
+
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(dominio.getId().toString());
+		queryParam01.setValue(proveedor.getId().toString());
 		queryParams.add(queryParam01);
-		
+
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("STRING");
-		queryParam02.setValue(dominio.getDescripcion());
+		queryParam02.setValue(proveedor.getDescripcion());
 		queryParams.add(queryParam02);
-		
+
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO CAT_PERFIL (Id_Perfil, Descripcion) VALUES (?, ?)");
+		requestParams.put("sql", "INSERT INTO CAT_PUESTO_PROVEEDOR (ID, DESCRIPCION) values (?,?)");
 		requestParams.put("data", queryParams);
-		
-		Object resultBase = databaseClientService.callBase(requestParams);
-		
+
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		return resultBase;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editDomain(@PathVariable Integer id, @RequestBody Dominio dominio) {
+	public Object editProveedor(@PathVariable Integer id, @RequestBody Proveedor proveedor) {
+
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
-		
+
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
-		queryParam01.setValue(dominio.getDescripcion());
+		queryParam01.setValue(proveedor.getDescripcion());
 		queryParams.add(queryParam01);
-		
+
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("INT");
 		queryParam02.setValue(id.toString());
 		queryParams.add(queryParam02);
-		
+
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE CAT_PERFIL SET Descripcion = ? WHERE Id_Perfil = ?");
+		requestParams.put("sql", "UPDATE CAT_PUESTO_PROVEEDOR SET Descripcion = ? WHERE id = ?");
 		requestParams.put("data", queryParams);
-		
-		Object resultBase = databaseClientService.callBase(requestParams);
-		
+
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
 		return resultBase;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeDomain(@PathVariable Integer id) {
+	public Object removeProveedor(@PathVariable Integer id) {
+
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
-		
+
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
-		
+
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM CAT_PERFIL WHERE Id_Perfil = ?");
+		requestParams.put("sql", "DELETE FROM CAT_PUESTO_PROVEEDOR WHERE Id = ?");
 		requestParams.put("data", queryParams);
-		
-		Object resultBase = databaseClientService.callBase(requestParams);
-		
+
+		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
+
 		return resultBase;
 	}
-	
+
 	@FeignClient(name = "mcTDCdbMain")
 	public interface DatabaseMicroserviceClient {
-		
+
 		@RequestMapping(value = "/getResultBD", method = RequestMethod.POST, produces = "application/json")
 		public ResultBase getResultQuery(@RequestBody HashMap<String, Object> datos);
-		
+
 	}
 
 }

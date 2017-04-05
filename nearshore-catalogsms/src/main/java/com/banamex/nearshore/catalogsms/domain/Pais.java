@@ -1,10 +1,18 @@
 package com.banamex.nearshore.catalogsms.domain;
 
-public class Perfil {
+public class Pais {
 
 	private Integer id;
 	private String descripcion;
-
+	
+	public Pais(){
+	}
+	
+	public Pais(Integer id,String descripcion){
+		this.id = id;
+		this.descripcion = descripcion;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -20,5 +28,5 @@ public class Perfil {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	
 }

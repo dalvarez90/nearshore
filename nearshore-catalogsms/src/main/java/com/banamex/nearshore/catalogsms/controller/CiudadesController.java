@@ -12,24 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banamex.nearshore.catalogsms.domain.Dominio;
+import com.banamex.nearshore.catalogsms.domain.Ciudad;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 @RestController
-@RequestMapping("perfiles")
-public class PerfilesController {
+@RequestMapping("ciudades")
+public class CiudadesController{
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveAllDomains() {
+	public Object retrieveAllCities() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL");
+		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_CIUDAD);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
 		
@@ -37,7 +38,7 @@ public class PerfilesController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveDomainById(@PathVariable Integer id) {
+	public Object retrieveCityById(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -48,7 +49,7 @@ public class PerfilesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL WHERE ID_Perfil = ?");
+		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_CIUDAD+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
@@ -56,25 +57,19 @@ public class PerfilesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-	public Object newDomain(@RequestBody Dominio dominio) {
+	@RequestMapping(value = "/paises/{id}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveCityByIdCountry(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(dominio.getId().toString());
+		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		Data queryParam02 = new Data();
-		queryParam02.setIndex(2);
-		queryParam02.setType("STRING");
-		queryParam02.setValue(dominio.getDescripcion());
-		queryParams.add(queryParam02);
-		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO CAT_PERFIL (Id_Perfil, Descripcion) VALUES (?, ?)");
+		requestParams.put("tipoQuery", 2);
+		requestParams.put("sql", "SELECT CIUDAD.* FROM "+Constants.CAT_CIUDAD+" CIUDAD INNER JOIN "+Constants.CAT_PAIS+" PAIS ON CIUDAD.ID_PAIS = PAIS.ID WHERE PAIS.ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
@@ -82,15 +77,17 @@ public class PerfilesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editDomain(@PathVariable Integer id, @RequestBody Dominio dominio) {
+	
+	@RequestMapping(value = "/paises/{id}", method = RequestMethod.POST, produces = "application/json")
+	public Object newCity(@RequestBody Ciudad ciudad, @PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
+		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
-		queryParam01.setType("STRING");
-		queryParam01.setValue(dominio.getDescripcion());
+		queryParam01.setType("INT");
+		queryParam01.setValue(ciudad.getId().toString());
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
@@ -99,8 +96,46 @@ public class PerfilesController {
 		queryParam02.setValue(id.toString());
 		queryParams.add(queryParam02);
 		
+		Data queryParam03 = new Data();
+		queryParam03.setIndex(3);
+		queryParam03.setType("STRING");
+		queryParam03.setValue(ciudad.getDescripcion());
+		queryParams.add(queryParam03);
+		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE CAT_PERFIL SET Descripcion = ? WHERE Id_Perfil = ?");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_CIUDAD+" (Id, Id_Pais ,Descripcion) VALUES (?, ?, ?)");
+		requestParams.put("data", queryParams);
+		
+		Object resultBase = databaseClientService.callBase(requestParams);
+		
+		return resultBase;
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editCity(@PathVariable Integer id, @RequestBody Ciudad ciudad) {
+		HashMap<String, Object> requestParams = new HashMap<String, Object>();
+		
+		List<Data> queryParams = new ArrayList<>();
+		Data queryParam01 = new Data();
+		queryParam01.setIndex(1);
+		queryParam01.setType("STRING");
+		queryParam01.setValue(ciudad.getDescripcion());
+		queryParams.add(queryParam01);
+		
+		Data queryParam02 = new Data();
+		queryParam02.setIndex(2);
+		queryParam02.setType("INT");
+		queryParam02.setValue(ciudad.getPais().getId().toString());
+		queryParams.add(queryParam02);
+		
+		Data queryParam03 = new Data();
+		queryParam03.setIndex(3);
+		queryParam03.setType("INT");
+		queryParam03.setValue(id.toString());
+		queryParams.add(queryParam03);
+		
+		requestParams.put("tipoQuery", 1);
+		requestParams.put("sql", "UPDATE "+Constants.CAT_CIUDAD+" SET Descripcion = ? , Id_Pais = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
@@ -109,7 +144,7 @@ public class PerfilesController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeDomain(@PathVariable Integer id) {
+	public Object removeCity(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -120,7 +155,7 @@ public class PerfilesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM CAT_PERFIL WHERE Id_Perfil = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.CAT_CIUDAD+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
@@ -129,7 +164,7 @@ public class PerfilesController {
 	}
 	
 	@FeignClient(name = "mcTDCdbMain")
-	public interface DatabaseMicroserviceClient {
+	public interface DatabaseMicroServiceClient {
 		
 		@RequestMapping(value = "/getResultBD", method = RequestMethod.POST, produces = "application/json")
 		public ResultBase getResultQuery(@RequestBody HashMap<String, Object> datos);
