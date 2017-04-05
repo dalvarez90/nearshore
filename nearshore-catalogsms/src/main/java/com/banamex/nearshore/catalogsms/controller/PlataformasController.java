@@ -20,7 +20,7 @@ import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("plataformas")
-public class PlatformController {
+public class PlataformasController {
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseClientService;

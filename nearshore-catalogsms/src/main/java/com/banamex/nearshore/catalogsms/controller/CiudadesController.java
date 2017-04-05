@@ -20,7 +20,7 @@ import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("ciudades")
-public class CitiesController{
+public class CiudadesController{
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseClientService;
