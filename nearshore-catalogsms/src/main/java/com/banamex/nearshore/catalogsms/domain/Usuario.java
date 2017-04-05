@@ -6,7 +6,7 @@ public class Usuario {
 	private Perfil perfil;
 	private String email;
 	private String primerNombre;
-	private String segundoNombre;
+	private String segundoNombe;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private String clave;
@@ -32,10 +32,10 @@ public class Usuario {
 		this.primerNombre = primerNombre;
 	}
 	public String getSegundoNombre() {
-		return segundoNombre;
+		return segundoNombe;
 	}
 	public void setSegundoNombre(String segundoNombre) {
-		this.segundoNombre = segundoNombre;
+		this.segundoNombe = segundoNombre;
 	}
 	public String getApellidoPaterno() {
 		return apellidoPaterno;
