@@ -134,7 +134,9 @@ public class UsuarioController {
 		queryParams.add(queryParam11);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO usuario(id_Usuarios,email,"
+				+ "PrimerNombre,SegundoNombe,ApellidoPaterno,ApellidoMaterno,"
+				+ "Clave,Id_perfil,Activo,Dominios,Proveedores) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = databaseClientService.callBase(requestParams);
