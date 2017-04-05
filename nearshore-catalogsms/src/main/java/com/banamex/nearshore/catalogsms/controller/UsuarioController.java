@@ -30,7 +30,7 @@ public class UsuarioController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombre,"
+		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
 				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
 		
@@ -51,7 +51,7 @@ public class UsuarioController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombre,"
+		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
 				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
