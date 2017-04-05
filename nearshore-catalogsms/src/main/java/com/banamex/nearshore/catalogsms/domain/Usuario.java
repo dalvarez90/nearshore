@@ -31,11 +31,11 @@ public class Usuario {
 	public void setPrimerNombre(String primerNombre) {
 		this.primerNombre = primerNombre;
 	}
-	public String getSegundoNombre() {
+	public String getSegundoNombe() {
 		return segundoNombe;
 	}
-	public void setSegundoNombre(String segundoNombre) {
-		this.segundoNombe = segundoNombre;
+	public void setSegundoNombe(String segundoNombe) {
+		this.segundoNombe = segundoNombe;
 	}
 	public String getApellidoPaterno() {
 		return apellidoPaterno;
