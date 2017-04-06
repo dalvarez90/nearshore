@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Ciudad;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
@@ -23,16 +24,21 @@ import com.banamex.nearshore.util.Constants;
 public class CiudadesController{
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllCities() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_CIUDAD);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT * FROM " + Constants.CAT_CIUDAD);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -48,11 +54,16 @@ public class CiudadesController{
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_CIUDAD+" WHERE ID = ?");
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT * FROM " + Constants.CAT_CIUDAD + " WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -68,11 +79,16 @@ public class CiudadesController{
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT CIUDAD.* FROM "+Constants.CAT_CIUDAD+" CIUDAD INNER JOIN "+Constants.CAT_PAIS+" PAIS ON CIUDAD.ID_PAIS = PAIS.ID WHERE PAIS.ID = ?");
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT CIUDAD.* FROM " + Constants.CAT_CIUDAD + " CIUDAD INNER JOIN " + Constants.CAT_PAIS + " PAIS ON CIUDAD.ID_PAIS = PAIS.ID WHERE PAIS.ID = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -102,11 +118,16 @@ public class CiudadesController{
 		queryParam03.setValue(ciudad.getDescripcion());
 		queryParams.add(queryParam03);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO "+Constants.CAT_CIUDAD+" (Id, Id_Pais ,Descripcion) VALUES (?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -134,11 +155,16 @@ public class CiudadesController{
 		queryParam03.setValue(id.toString());
 		queryParams.add(queryParam03);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE "+Constants.CAT_CIUDAD+" SET Descripcion = ? , Id_Pais = ? WHERE Id = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "UPDATE " + Constants.CAT_CIUDAD + " SET Descripcion = ? , Id_Pais = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -154,11 +180,16 @@ public class CiudadesController{
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM "+Constants.CAT_CIUDAD+" WHERE Id = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "DELETE FROM " + Constants.CAT_CIUDAD + " WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
