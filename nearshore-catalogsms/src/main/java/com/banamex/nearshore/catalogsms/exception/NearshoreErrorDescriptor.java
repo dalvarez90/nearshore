@@ -4,7 +4,7 @@ public class NearshoreErrorDescriptor {
 
 	private String url;
 	private int status;
-	private String message;
+	private int errorCode;
 
 	public String getUrl() {
 		return url;
@@ -22,12 +22,12 @@ public class NearshoreErrorDescriptor {
 		this.status = status;
 	}
 
-	public String getMessage() {
-		return message;
+	public int getErrorCode() {
+		return errorCode;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
 	}
 
 }

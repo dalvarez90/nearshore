@@ -13,24 +13,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Pais;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
+import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("paises")
 public class PaisesController {
 	
 	@Autowired
-	DbMicroserviceClient databaseMicroserviceClient;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllCountry() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PAIS");
 		
-		Object resultBase = databaseMicroserviceClient.getResultQuery(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -46,11 +54,16 @@ public class PaisesController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PAIS WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseMicroserviceClient.getResultQuery(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -72,11 +85,16 @@ public class PaisesController {
 		queryParam02.setValue(pais.getDescripcion());
 		queryParams.add(queryParam02);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO CAT_PAIS (Id, Descripcion) VALUES (?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseMicroserviceClient.getResultQuery(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -98,11 +116,16 @@ public class PaisesController {
 		queryParam02.setValue(id.toString());
 		queryParams.add(queryParam02);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "UPDATE CAT_PAIS SET Descripcion = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseMicroserviceClient.getResultQuery(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -118,18 +141,22 @@ public class PaisesController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "DELETE FROM CAT_PAIS WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseMicroserviceClient.getResultQuery(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
 	
-	//@FeignClient(name = "dbMcMysql")
 	@FeignClient(name = "mcTDCdbMain")
-	public interface DbMicroserviceClient {
+	public interface DatabaseMicroserviceClient {
 		
 		@RequestMapping(value = "/getResultBD", method = RequestMethod.POST, produces = "application/json")
 		public ResultBase getResultQuery(@RequestBody HashMap<String, Object> datos);
