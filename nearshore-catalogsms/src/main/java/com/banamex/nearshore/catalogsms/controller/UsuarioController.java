@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Usuario;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 
 @RestController
@@ -23,18 +25,23 @@ import com.banamex.nearshore.databasems.ResultBase;
 public class UsuarioController {
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
 				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -50,14 +57,19 @@ public class UsuarioController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
 				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -133,13 +145,18 @@ public class UsuarioController {
 		queryParam11.setValue(usuario.getProveedores());
 		queryParams.add(queryParam11);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO usuario(id_Usuarios,email,"
 				+ "PrimerNombre,SegundoNombe,ApellidoPaterno,ApellidoMaterno,"
 				+ "Clave,Id_perfil,Activo,Dominios,Proveedores) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -215,14 +232,19 @@ public class UsuarioController {
 		queryParam11.setValue(usuario.getProveedores());
 		queryParams.add(queryParam11);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "UPDATE usuario SET email = ?,PrimerNombre = ?,"
 				+ "SegundoNombe = ?, ApellidoPaterno = ?,ApellidoMaterno = ?,"
 				+ "Clave = ?, id_Perfil = ?, Activo= ?, Dominios = ?, Proveedores= ?"
 				+ " WHERE Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -238,11 +260,16 @@ public class UsuarioController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "DELETE FROM usuario WHERE Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}

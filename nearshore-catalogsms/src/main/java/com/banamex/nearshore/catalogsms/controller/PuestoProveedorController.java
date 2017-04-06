@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Proveedor;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 
 @RestController
@@ -29,10 +31,17 @@ public class PuestoProveedorController {
 	public Object retrieveAllPuestosCiti() {
 		HashMap<String, Object> requestParams = new HashMap<>();
 
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTO_PROVEEDOR");
-		Object resp = databaseMicroserviceClientService.callBase(requestParams);
-		return resp;
+		
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
+		
+		return resultBase;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -46,10 +55,17 @@ public class PuestoProveedorController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTO_PROVEEDOR WHERE ID = ?");
 		requestParams.put("data", queryParams);
-		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
+		
 		return resultBase;
 	}
 
@@ -71,11 +87,17 @@ public class PuestoProveedorController {
 		queryParam02.setValue(proveedor.getDescripcion());
 		queryParams.add(queryParam02);
 
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO CAT_PUESTO_PROVEEDOR (ID, DESCRIPCION) values (?,?)");
 		requestParams.put("data", queryParams);
 
-		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
+		
 		return resultBase;
 	}
 
@@ -97,11 +119,17 @@ public class PuestoProveedorController {
 		queryParam02.setValue(id.toString());
 		queryParams.add(queryParam02);
 
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "UPDATE CAT_PUESTO_PROVEEDOR SET Descripcion = ? WHERE id = ?");
 		requestParams.put("data", queryParams);
 
-		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
+		
 		return resultBase;
 	}
 
@@ -117,11 +145,16 @@ public class PuestoProveedorController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "DELETE FROM CAT_PUESTO_PROVEEDOR WHERE Id = ?");
 		requestParams.put("data", queryParams);
 
-		Object resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 
 		return resultBase;
 	}

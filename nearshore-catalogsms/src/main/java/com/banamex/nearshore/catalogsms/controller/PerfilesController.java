@@ -13,25 +13,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Dominio;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("perfiles")
 public class PerfilesController {
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL");
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -47,11 +54,16 @@ public class PerfilesController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT ID_Perfil, DESCRIPCION FROM CAT_PERFIL WHERE ID_Perfil = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -73,11 +85,16 @@ public class PerfilesController {
 		queryParam02.setValue(dominio.getDescripcion());
 		queryParams.add(queryParam02);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO CAT_PERFIL (Id_Perfil, Descripcion) VALUES (?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -99,11 +116,16 @@ public class PerfilesController {
 		queryParam02.setValue(id.toString());
 		queryParams.add(queryParam02);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "UPDATE CAT_PERFIL SET Descripcion = ? WHERE Id_Perfil = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -119,11 +141,16 @@ public class PerfilesController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "DELETE FROM CAT_PERFIL WHERE Id_Perfil = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}

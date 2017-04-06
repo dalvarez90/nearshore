@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Plataforma;
+import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
@@ -23,16 +24,21 @@ import com.banamex.nearshore.util.Constants;
 public class PlataformasController {
 	
 	@Autowired
-	private DatabaseMicroserviceClientService databaseClientService;
+	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllPlatforms() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_PLATAFORMA);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -48,11 +54,16 @@ public class PlataformasController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT * FROM "+Constants.CAT_PLATAFORMA+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -82,11 +93,16 @@ public class PlataformasController {
 		queryParam03.setValue(plataforma.getComentarios().toString());
 		queryParams.add(queryParam03);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PLATAFORMA+" (Id, Descripcion, Comentarios) VALUES (?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -114,11 +130,16 @@ public class PlataformasController {
 		queryParam03.setValue(id.toString());
 		queryParams.add(queryParam03);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "UPDATE "+Constants.CAT_PLATAFORMA+" SET Descripcion = ? , Comentarios = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
@@ -134,11 +155,16 @@ public class PlataformasController {
 		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "DELETE FROM "+Constants.CAT_PLATAFORMA+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
-		Object resultBase = databaseClientService.callBase(requestParams);
+		Object resultBase = null;
+		try {
+			resultBase = databaseMicroserviceClientService.callBase(requestParams);
+		} catch (Exception e) {
+			throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+		}
 		
 		return resultBase;
 	}
