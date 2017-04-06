@@ -22,7 +22,7 @@ import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("usuarios")
-public class UsuarioController {
+public class UsuariosController {
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
