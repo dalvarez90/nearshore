@@ -25,7 +25,7 @@ import com.banamex.nearshore.util.Util;
 
 @RestController
 @RequestMapping("aplicaciones")
-public class AplicacionController{
+public class AplicacionesController {
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
@@ -34,8 +34,8 @@ public class AplicacionController{
 	public Object retrieveAllApplications() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT * FROM "+Constants.APLICACION);
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION);
 		
 		Object resultBase = null;
 		try {
@@ -58,8 +58,8 @@ public class AplicacionController{
 		queryParam01.setValue(csiId.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT * FROM "+Constants.APLICACION+" WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION + " WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -77,8 +77,8 @@ public class AplicacionController{
 		
 		List<Data> queryParams = getQueryParamsAplicacion(aplicacion);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO "+Constants.APLICACION+" (Id_Dominio , PTB_ID , DescripcionCorta , DescripcionLarga , Id_L1 , Id_L2 , Id_L3 , Id_Plat1 , Id_Plat2 , Id_Plat3 , Comentarios , `Contactos Proveedor_Proveedor` , APLICACIONcol , CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION + " (Id_Dominio , PTB_ID , DescripcionCorta , DescripcionLarga , Id_L1 , Id_L2 , Id_L3 , Id_Plat1 , Id_Plat2 , Id_Plat3 , Comentarios , `Contactos Proveedor_Proveedor` , APLICACIONcol , CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -193,8 +193,8 @@ public class AplicacionController{
 //		queryParam14.setValue(csiId.toString());
 //		queryParams.add(queryParam14);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE "+Constants.APLICACION+" SET Id_Dominio = ? , PTB_ID = ? , DescripcionCorta = ? , DescripcionLarga = ? , Id_L1 = ? , Id_L2 = ? , Id_L3 = ? , Id_Plat1 = ? , Id_Plat2 = ? , Id_Plat3 = ? , Comentarios = ? , `Contactos Proveedor_Proveedor` = ? , APLICACIONcol = ? WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "UPDATE " + Constants.APLICACION + " SET Id_Dominio = ? , PTB_ID = ? , DescripcionCorta = ? , DescripcionLarga = ? , Id_L1 = ? , Id_L2 = ? , Id_L3 = ? , Id_Plat1 = ? , Id_Plat2 = ? , Id_Plat3 = ? , Comentarios = ? , `Contactos Proveedor_Proveedor` = ? , APLICACIONcol = ? WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -219,8 +219,8 @@ public class AplicacionController{
 		queryParam01.setValue(csiId.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM "+Constants.APLICACION+" WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION + " WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -243,8 +243,8 @@ public class AplicacionController{
 		queryParam01.setValue(csiId.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT * FROM "+Constants.APLICACION_PROVEEDOR+" WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION_PROVEEDOR + " WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -263,8 +263,8 @@ public class AplicacionController{
 		aplicacionProveedor.setCsiId(csiId);
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO "+Constants.APLICACION_PROVEEDOR+" (Id_Proveedor, L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_PROVEEDOR + " (Id_Proveedor, L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -283,8 +283,8 @@ public class AplicacionController{
 		aplicacionProveedor.setCsiId(csiId);
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR+" SET Id_Proveedor = ? , L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR + " SET Id_Proveedor = ? , L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -309,8 +309,8 @@ public class AplicacionController{
 		queryParam01.setValue(csiId.toString());
 		queryParams.add(queryParam01);
 		
-		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM "+Constants.APLICACION_PROVEEDOR+" WHERE CSI_ID = ?");
+		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION_PROVEEDOR + " WHERE CSI_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -322,7 +322,7 @@ public class AplicacionController{
 		return resultBase;
 	}
 	
-	private List<Data> getQueryParamsAplicacionProveedor(AplicacionProveedor aplicacionProveedor){
+	private List<Data> getQueryParamsAplicacionProveedor(AplicacionProveedor aplicacionProveedor) {
 		List<Data> queryParams = new ArrayList<Data>();
 		Data datos [] = new Data[8]; 
 		
@@ -335,14 +335,14 @@ public class AplicacionController{
 		datos[6] = Util.createDataObj(aplicacionProveedor.getL3Backup(), "INT", 7);
 		datos[7] = Util.createDataObj(aplicacionProveedor.getCsiId(), "INT", 8);
 		
-		for(Data dato : datos){
+		for(Data dato : datos) {
 			queryParams.add(dato);
 		}
 				
 		return queryParams;
 	}
 	
-	private List<Data> getQueryParamsAplicacion(Aplicacion aplicacion){
+	private List<Data> getQueryParamsAplicacion(Aplicacion aplicacion) {
 		List<Data> queryParams = new ArrayList<Data>();
 		Data datos [] = new Data[14]; 
 		
@@ -361,7 +361,7 @@ public class AplicacionController{
 		datos[12] = Util.createDataObj(aplicacion.getAplicacionCol().toString(), "STRING", 13);
 		datos[13] = Util.createDataObj(aplicacion.getCsiId().toString(), "INT", 14);
 		
-		for(Data dato : datos){
+		for(Data dato : datos) {
 			queryParams.add(dato);
 		}
 				
