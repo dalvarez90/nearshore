@@ -68,7 +68,7 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/paises/{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/paises/{id}/ciudades", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveCityByIdCountry(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
@@ -94,7 +94,7 @@ public class CiudadesController{
 	}
 	
 	
-	@RequestMapping(value = "/paises/{id}", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/paises/{id}/ciudades", method = RequestMethod.POST, produces = "application/json")
 	public Object newCity(@RequestBody Ciudad ciudad, @PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
