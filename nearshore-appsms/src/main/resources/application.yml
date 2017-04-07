@@ -3,14 +3,14 @@ variables:
     host: hostEureka
     port: 8761
 info:
-  component: Catalogs microservice (nearshore-catalogsms)
+  component: Domains and Applications microservice (nearshore-appsms)
 server:
-  port: 7701
+  port: 7702
 spring:
   config:
-    name: nearshore-catalogsms
+    name: nearshore-appsms
   application:
-    name: nearshore-catalogsms
+    name: nearshore-appsms
 
 logging:
   level:
