@@ -25,7 +25,7 @@ import com.banamex.nearshore.util.Util;
 
 @RestController
 @RequestMapping("aplicaciones")
-public class ApplicationsController{
+public class AplicacionController{
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
