@@ -1,7 +1,10 @@
 package com.banamex.nearshore.catalogsms.domain;
 
+import javax.validation.constraints.NotNull;
+
 public class Aplicacion {
 
+	@NotNull
 	private Integer csiId;
 	private Integer idDominio;
 	private String ptbId;
@@ -14,6 +17,7 @@ public class Aplicacion {
 	private Integer idPlat2;
 	private Integer idPlat3;
 	private String comentarios;
+	@NotNull
 	private Integer contactosProveedorProveedor;
 	private String aplicacionCol;
 	
