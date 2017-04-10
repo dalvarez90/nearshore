@@ -87,7 +87,7 @@ public class PuestoCitiController {
 		queryParams.add(queryParam02);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_PUESTOCITI (ID, DESCRIPCION) values (?,?)");
+		requestParams.put("sql", "INSERT INTO CAT_PUESTOCITI (DESCRIPCION) values (?)");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;

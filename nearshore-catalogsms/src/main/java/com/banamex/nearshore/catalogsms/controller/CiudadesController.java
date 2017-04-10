@@ -100,26 +100,22 @@ public class CiudadesController{
 		
 		List<Data> queryParams = new ArrayList<>();
 		
+		
+		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(ciudad.getId().toString());
+		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
-		queryParam02.setType("INT");
-		queryParam02.setValue(id.toString());
+		queryParam02.setType("STRING");
+		queryParam02.setValue(ciudad.getDescripcion());
 		queryParams.add(queryParam02);
 		
-		Data queryParam03 = new Data();
-		queryParam03.setIndex(3);
-		queryParam03.setType("STRING");
-		queryParam03.setValue(ciudad.getDescripcion());
-		queryParams.add(queryParam03);
-		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO "+Constants.CAT_CIUDAD+" (Id, Id_Pais ,Descripcion) VALUES (?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_CIUDAD+" ( Id_Pais ,Descripcion) VALUES ( ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;

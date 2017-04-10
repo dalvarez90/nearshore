@@ -74,20 +74,16 @@ public class ProveedoresController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
 		List<Data> queryParams = new ArrayList<>();
+		
+
 		Data queryParam01 = new Data();
-		queryParam01.setIndex(1);
-		queryParam01.setType("INT");
-		queryParam01.setValue(proveedor.getId().toString());
+		queryParam01.setIndex(2);
+		queryParam01.setType("STRING");
+		queryParam01.setValue(proveedor.getDescripcion());
 		queryParams.add(queryParam01);
 
-		Data queryParam02 = new Data();
-		queryParam02.setIndex(2);
-		queryParam02.setType("STRING");
-		queryParam02.setValue(proveedor.getDescripcion());
-		queryParams.add(queryParam02);
-
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_PROVEEDOR (Id, Descripcion) values (?,?)");
+		requestParams.put("sql", "INSERT INTO CAT_PROVEEDOR (Descripcion) values (?)");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;

@@ -75,26 +75,21 @@ public class PlataformasController {
 		
 		List<Data> queryParams = new ArrayList<>();
 		
-		Data queryParam01 = new Data();
-		queryParam01.setIndex(1);
-		queryParam01.setType("INT");
-		queryParam01.setValue(plataforma.getId().toString());
+	
+		Data queryParam01= new Data();
+		queryParam01.setIndex(2);
+		queryParam01.setType("STRING");
+		queryParam01.setValue(plataforma.getDescripcion().toString());
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("STRING");
-		queryParam02.setValue(plataforma.getDescripcion().toString());
+		queryParam02.setValue(plataforma.getComentarios().toString());
 		queryParams.add(queryParam02);
 		
-		Data queryParam03 = new Data();
-		queryParam03.setIndex(3);
-		queryParam03.setType("STRING");
-		queryParam03.setValue(plataforma.getComentarios().toString());
-		queryParams.add(queryParam03);
-		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PLATAFORMA+" (Id, Descripcion, Comentarios) VALUES (?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PLATAFORMA+" (Descripcion, Comentarios) VALUES (?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
