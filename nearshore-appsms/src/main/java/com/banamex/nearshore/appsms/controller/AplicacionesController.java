@@ -1,4 +1,4 @@
-package com.banamex.nearshore.employeesms.controller;
+package com.banamex.nearshore.appsms.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banamex.nearshore.appsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
 import com.banamex.nearshore.databasems.ResultBase;
-import com.banamex.nearshore.employeesms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.util.Constants;
 
 @RestController
-@RequestMapping("empleados/proveedores")
-public class EmpleadosProveedoresController {
+@RequestMapping("aplicaciones")
+public class AplicacionesController {
 	
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
 	@RequestMapping(value = "/dominio/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveCitiEmployeesByDomain(@PathVariable Integer id) {
+	public Object retrieveApplicationsByDomain(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -37,7 +37,7 @@ public class EmpleadosProveedoresController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT SOE_ID FROM RECURSO_PROVEEDOR WHERE Id_Proveedor = ?");
+		requestParams.put("sql", "SELECT CSI_ID FROM APLICACION WHERE Id_Dominio = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
