@@ -1,12 +1,12 @@
 package com.banamex.nearshore.catalogsms.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
+//import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RecursoCiti {
 
-	@NotEmpty
-	private String soe_id;//7
+//	@NotEmpty
+	private String soe_id;
 	private String apellidoPaterno; //45
 	private String apellidoMaterno;//45
 	private String primerNombre; //45

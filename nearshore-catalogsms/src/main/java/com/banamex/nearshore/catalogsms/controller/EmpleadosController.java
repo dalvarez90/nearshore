@@ -77,6 +77,9 @@ public class EmpleadosController {
 	
 	@RequestMapping(value = "/citi", method = RequestMethod.POST, produces = "application/json")
 	public Object newCitiEmployee(@RequestBody @Valid RecursoCiti recursoCiti) {
+		if(recursoCiti.getSoe_id() == null){
+			throw new NearshoreDatabaseMicroserviceException("El campo soe_id no puede ser null");
+		}
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		List<Data> queryParams = new ArrayList<>();
 		queryParams = getCitiEmployeeParamsFormated(recursoCiti);
@@ -286,7 +289,7 @@ public class EmpleadosController {
 	
 	private List<Data> getSupplierEmployeeParamsFormated(RecursoProveedor recursoProveedor) {
 		List<Data> queryParams = new ArrayList<>();
-		Data[] qryParamsArr = new Data[20];
+		Data[] qryParamsArr = new Data[19];
 		
 		qryParamsArr[0] = createDataObj(1, "INT", recursoProveedor.getProveedor().getId());
 		qryParamsArr[1] = createDataObj(2, "STRING", recursoProveedor.getApellidoPaterno());
