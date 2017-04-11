@@ -27,34 +27,8 @@ public class RecursoCiti {
 	@Autowired
 	RecursoCiti reportaA;
 	
-	private String idCSIs; //2000
 	private String comentarios; //2000
 	
-//	public RecursoCiti(){}
-//
-//	public RecursoCiti(String soe_id){
-//		this.soe_id = soe_id;
-//	}
-//	
-//	public RecursoCiti(String soe_id, String apellidoPaterno, String apellidoMaterno, String primerNombre,
-//			String segundoNombre, Dominio dominio, PuestoCiti puestoCiti, Ciudad ciudad, String ext, String movil,
-//			String telefono, String email, RecursoCiti reportaA, String idCSIs, String comentarios) {
-//		this.soe_id = soe_id;
-//		this.apellidoPaterno = apellidoPaterno;
-//		this.apellidoMaterno = apellidoMaterno;
-//		this.primerNombre = primerNombre;
-//		this.segundoNombre = segundoNombre;
-//		this.dominio = dominio;
-//		this.puestoCiti = puestoCiti;
-//		this.ciudad = ciudad;
-//		this.ext = ext;
-//		this.movil = movil;
-//		this.telefono = telefono;
-//		this.email = email;
-//		this.reportaA = reportaA;
-//		this.idCSIs = idCSIs;
-//		this.comentarios = comentarios;
-//	}
 
 	public String getSoe_id() {
 		return soe_id;
@@ -158,14 +132,6 @@ public class RecursoCiti {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-		public String getIdCSIs() {
-		return idCSIs;
-	}
-
-	public void setIdCSIs(String idCSIs) {
-		this.idCSIs = idCSIs;
 	}
 
 	public String getComentarios() {

@@ -7,14 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class RecursoProveedor {
 
-	@NotNull
 	private Integer id;
 	@NotNull
 	@Autowired
 	Proveedor proveedor;
-	@NotNull
-	private Integer numeroEmpleado;
-	@NotNull
 	private Integer claveEmpleado;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
@@ -34,7 +30,6 @@ public class RecursoProveedor {
 	private String soe_id; 
 	private String extCiti;
 	private String emailCiti;
-	private String idCSIs;
 	private String comentarios;
 	
 	
@@ -49,12 +44,6 @@ public class RecursoProveedor {
 	}
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
-	}
-	public Integer getNumeroEmpleado() {
-		return numeroEmpleado;
-	}
-	public void setNumeroEmpleado(Integer numeroEmpleado) {
-		this.numeroEmpleado = numeroEmpleado;
 	}
 	public Integer getClaveEmpleado() {
 		return claveEmpleado;
@@ -157,12 +146,6 @@ public class RecursoProveedor {
 	}
 	public void setEmailCiti(String emailCiti) {
 		this.emailCiti = emailCiti;
-	}
-	public String getIdCSIs() {
-		return idCSIs;
-	}
-	public void setIdCSIs(String idCSIs) {
-		this.idCSIs = idCSIs;
 	}
 	public String getComentarios() {
 		return comentarios;

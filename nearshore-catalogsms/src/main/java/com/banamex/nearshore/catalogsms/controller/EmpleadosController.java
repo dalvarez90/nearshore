@@ -32,9 +32,9 @@ public class EmpleadosController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT SOE_ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
-						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios "
+						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
 						+ "FROM RECURSO_CITI");
 		
 		Object resultBase = null;
@@ -59,9 +59,9 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT SOE_ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
-						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios "
+						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
 						+ "FROM RECURSO_CITI WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
@@ -79,13 +79,12 @@ public class EmpleadosController {
 	public Object newCitiEmployee(@RequestBody @Valid RecursoCiti recursoCiti) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		List<Data> queryParams = new ArrayList<>();
-		System.out.println("-----> SOEID: "+ recursoCiti.getSoe_id());
 		queryParams = getCitiEmployeeParamsFormated(recursoCiti);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO RECURSO_CITI (ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
-				+ "Id_Dominio, Id_Puesto, Id_Ciudad, Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios, SOE_ID) "
-				+ "values(?, ?, ?, ?, ?, "
+		requestParams.put("sql", "INSERT INTO RECURSO_CITI (Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
+				+ "Id_Dominio, Id_Puesto, Id_Ciudad, Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios, SOE_ID) "
+				+ "values(?, ?, ?, ?, "
 				+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
@@ -110,9 +109,9 @@ public class EmpleadosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("sql", "UPDATE RECURSO_CITI SET "
-				+ "ApellidoPaterno = ?, ApellidoMaterno = ?, PrimerNombre = ?, SegundoNombre = ?, "
+				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Dominio = ?, Id_Puesto = ?, Id_Ciudad = ?, Ext = ?, Movil = ?, Telefono = ?, "
-				+ "Email = ?, Id_ReportaA = ?, Id_CSIs = ?, Comentarios = ? "
+				+ "Email = ?, Id_ReportaA = ?, Comentarios = ? "
 				+ "WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
@@ -156,12 +155,11 @@ public class EmpleadosController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT Id, Id_Proveedor, NumeroEmpleado, ClaveEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT Id, Id_Proveedor, Clave_Empleado, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
-				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios "
+				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, Comentarios "
 				+ "FROM RECURSO_PROVEEDOR");
 		
 		Object resultBase = null; 
@@ -186,13 +184,12 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT Id, Id_Proveedor, NumeroEmpleado, ClaveEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT Id, Id_Proveedor, Clave_Empleado, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
-				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios "
-				+ "FROM RECURSO_PROVEEDOR WHERE ClaveEmpleado = ?");
+				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, Comentarios "
+				+ "FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -207,18 +204,20 @@ public class EmpleadosController {
 	
 	@RequestMapping(value = "/proveedores", method = RequestMethod.POST, produces = "application/json")
 	public Object newSupplierEmployee(@RequestBody @Valid RecursoProveedor recursoProveedor) {
+		if(recursoProveedor.getClaveEmpleado() == null){
+			throw new NearshoreDatabaseMicroserviceException("El campo claveEmpleado no puede ser null");
+		}
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		List<Data> queryParams = new ArrayList<>();
 		queryParams = getSupplierEmployeeParamsFormated(recursoProveedor);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "insert into recurso_proveedor (Id, Id_Proveedor, NumeroEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "insert into recurso_proveedor (Id_Proveedor, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
-				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios, ClaveEmpleado) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, Comentarios, Clave_Empleado) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -242,13 +241,12 @@ public class EmpleadosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("sql", "UPDATE RECURSO_PROVEEDOR SET "
-				+ "Id = ?, Id_Proveedor = ?, NumeroEmpleado = ?, "
-				+ "ApellidoPaterno = ?, ApellidoMaterno = ?, PrimerNombre = ?, SegundoNombre = ?, "
+				+ "Id_Proveedor = ?, "
+				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Ciudad = ?, Movil_Personal = ?, Telefono_Particular = ?, Email_Personal = ?, "
 				+ "Id_Puesto = ?, Id_Reporta_A = ?, Telefono_Proveedor = ?, Ext_Proveedor = ?, "
-				+ "Email_Proveedor = ?, SOE_ID = ?, Ext_Citi = ?, Email_Citi = ?, "
-				+ "Id_CSIs = ?, Comentarios = ? "
-				+ "WHERE ClaveEmpleado = ?");
+				+ "Email_Proveedor = ?, SOE_ID = ?, Ext_Citi = ?, Email_Citi = ?, Comentarios = ? "
+				+ "WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -273,7 +271,7 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM RECURSO_PROVEEDOR WHERE ClaveEmpleado = ?");
+		requestParams.put("sql", "DELETE FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -288,30 +286,27 @@ public class EmpleadosController {
 	
 	private List<Data> getSupplierEmployeeParamsFormated(RecursoProveedor recursoProveedor) {
 		List<Data> queryParams = new ArrayList<>();
-		Data[] qryParamsArr = new Data[22];
+		Data[] qryParamsArr = new Data[20];
 		
-		qryParamsArr[0] = createDataObj(1, "INT", recursoProveedor.getId());
-		qryParamsArr[1] = createDataObj(2, "INT", recursoProveedor.getProveedor().getId());
-		qryParamsArr[2] = createDataObj(3, "INT", recursoProveedor.getNumeroEmpleado());
-		qryParamsArr[3] = createDataObj(4, "STRING", recursoProveedor.getApellidoPaterno());
-		qryParamsArr[4] = createDataObj(5, "STRING", recursoProveedor.getApellidoMaterno());
-		qryParamsArr[5] = createDataObj(6, "STRING", recursoProveedor.getPrimerNombre());
-		qryParamsArr[6] = createDataObj(7, "STRING", recursoProveedor.getSegundoNombre());
-		qryParamsArr[7] = createDataObj(8, "INT", recursoProveedor.getCiudad() != null ? recursoProveedor.getCiudad().getId() : null);
-		qryParamsArr[8] = createDataObj(9, "STRING", recursoProveedor.getMovilPersonal());
-		qryParamsArr[9] = createDataObj(10, "STRING", recursoProveedor.getTelefonoParticular());
-		qryParamsArr[10] = createDataObj(11, "STRING", recursoProveedor.getEmailPersonal());
-		qryParamsArr[11] = createDataObj(12, "INT", recursoProveedor.getPuesto() != null ? recursoProveedor.getPuesto().getId() : null);
-		qryParamsArr[12] = createDataObj(13, "INT", recursoProveedor.getIdReportaA());
-		qryParamsArr[13] = createDataObj(14, "STRING", recursoProveedor.getTelefonoProveedor());
-		qryParamsArr[14] = createDataObj(15, "STRING", recursoProveedor.getExtProveedor());
-		qryParamsArr[15] = createDataObj(16, "STRING", recursoProveedor.getEmailProveedor());
-		qryParamsArr[16] = createDataObj(17, "STRING", recursoProveedor.getSoe_id());
-		qryParamsArr[17] = createDataObj(18, "STRING", recursoProveedor.getExtCiti());
-		qryParamsArr[18] = createDataObj(19, "STRING", recursoProveedor.getEmailCiti());
-		qryParamsArr[19] = createDataObj(20, "STRING", recursoProveedor.getIdCSIs());
-		qryParamsArr[20] = createDataObj(21, "STRING", recursoProveedor.getComentarios());
-		qryParamsArr[21] = createDataObj(22, "INT", recursoProveedor.getClaveEmpleado());
+		qryParamsArr[0] = createDataObj(1, "INT", recursoProveedor.getProveedor().getId());
+		qryParamsArr[1] = createDataObj(2, "STRING", recursoProveedor.getApellidoPaterno());
+		qryParamsArr[2] = createDataObj(3, "STRING", recursoProveedor.getApellidoMaterno());
+		qryParamsArr[3] = createDataObj(4, "STRING", recursoProveedor.getPrimerNombre());
+		qryParamsArr[4] = createDataObj(5, "STRING", recursoProveedor.getSegundoNombre());
+		qryParamsArr[5] = createDataObj(6, "INT", recursoProveedor.getCiudad() != null ? recursoProveedor.getCiudad().getId() : null);
+		qryParamsArr[6] = createDataObj(7, "STRING", recursoProveedor.getMovilPersonal());
+		qryParamsArr[7] = createDataObj(8, "STRING", recursoProveedor.getTelefonoParticular());
+		qryParamsArr[8] = createDataObj(9, "STRING", recursoProveedor.getEmailPersonal());
+		qryParamsArr[9] = createDataObj(10, "INT", recursoProveedor.getPuesto() != null ? recursoProveedor.getPuesto().getId() : null);
+		qryParamsArr[10] = createDataObj(11, "INT", recursoProveedor.getIdReportaA());
+		qryParamsArr[11] = createDataObj(12, "STRING", recursoProveedor.getTelefonoProveedor());
+		qryParamsArr[12] = createDataObj(13, "STRING", recursoProveedor.getExtProveedor());
+		qryParamsArr[13] = createDataObj(14, "STRING", recursoProveedor.getEmailProveedor());
+		qryParamsArr[14] = createDataObj(15, "STRING", recursoProveedor.getSoe_id());
+		qryParamsArr[15] = createDataObj(16, "STRING", recursoProveedor.getExtCiti());
+		qryParamsArr[16] = createDataObj(17, "STRING", recursoProveedor.getEmailCiti());
+		qryParamsArr[17] = createDataObj(18, "STRING", recursoProveedor.getComentarios());
+		qryParamsArr[18] = createDataObj(19, "INT", recursoProveedor.getClaveEmpleado());
 		
 		for(int i = 0; i < qryParamsArr.length; i++)
 			queryParams.add(qryParamsArr[i]);
@@ -321,9 +316,9 @@ public class EmpleadosController {
 	
 	private List<Data> getCitiEmployeeParamsFormated(RecursoCiti recursoCiti) {
 		List<Data> queryParams = new ArrayList<>();
-		Data[] qryParamsArr = new Data[15];
+		Data[] qryParamsArr = new Data[14];
 		
-		qryParamsArr[0] = createDataObj(15, "STRING", recursoCiti.getSoe_id());
+		qryParamsArr[0] = createDataObj(14, "STRING", recursoCiti.getSoe_id());
 		qryParamsArr[1] = createDataObj(1, "STRING", recursoCiti.getApellidoPaterno());
 		qryParamsArr[2] = createDataObj(2, "STRING", recursoCiti.getApellidoMaterno());
 		qryParamsArr[3] = createDataObj(3, "STRING", recursoCiti.getPrimerNombre());
@@ -337,8 +332,7 @@ public class EmpleadosController {
 		qryParamsArr[11] = createDataObj(11, "STRING", recursoCiti.getEmail());
 		String soeid = recursoCiti.getReportaA()!=null ? recursoCiti.getReportaA().getSoe_id() : null;
 		qryParamsArr[12] = createDataObj(12, "STRING", soeid);
-		qryParamsArr[13] = createDataObj(13, "STRING", recursoCiti.getIdCSIs());
-		qryParamsArr[14] = createDataObj(14, "STRING", recursoCiti.getComentarios());
+		qryParamsArr[13] = createDataObj(13, "STRING", recursoCiti.getComentarios());
 		
 		for(int i = 0; i < qryParamsArr.length ; i++)
 			queryParams.add(qryParamsArr[i]);
