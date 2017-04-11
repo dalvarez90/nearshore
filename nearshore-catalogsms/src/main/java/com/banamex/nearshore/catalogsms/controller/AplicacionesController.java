@@ -59,7 +59,7 @@ public class AplicacionesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION + " WHERE CSI_ID = ?");
+		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION + " WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -75,10 +75,10 @@ public class AplicacionesController {
 	public Object newAplication(@RequestBody @Valid Aplicacion aplicacion) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		List<Data> queryParams = getQueryParamsAplicacion(aplicacion);
+		List<Data> queryParams = getQueryParamsAplicacion(aplicacion,false);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION + " (Id_Dominio , PTB_ID , DescripcionCorta , DescripcionLarga , Id_L1 , Id_L2 , Id_L3 , Id_Plat1 , Id_Plat2 , Id_Plat3 , Comentarios , `Contactos Proveedor_Proveedor` , APLICACIONcol , CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION + " (Id_Dominio , PTB_ID , Descripcion_Corta , Descripcion_Larga , Id_L1 , Id_L2 , Id_L3 , Id_Plat1 , Id_Plat2 , Id_Plat3 , Comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -95,106 +95,10 @@ public class AplicacionesController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		aplicacion.setCsiId(csiId);
-		List<Data> queryParams = getQueryParamsAplicacion(aplicacion);
-		
-//		List<Data> queryParams = new ArrayList<>();
-//		
-//		Data queryParam01 = new Data();
-//		Data queryParam02 = new Data();
-//		Data queryParam03 = new Data();
-//		Data queryParam04 = new Data();
-//		Data queryParam05 = new Data();
-//		Data queryParam06 = new Data();
-//		Data queryParam07 = new Data();
-//		Data queryParam08 = new Data();
-//		Data queryParam09 = new Data();
-//		Data queryParam10 = new Data();
-//		Data queryParam11 = new Data();
-//		Data queryParam12 = new Data();
-//		Data queryParam13 = new Data();
-//		Data queryParam14 = new Data();
-//		
-//		
-//		queryParam01.setIndex(1);
-//		String idDominio = (aplicacion.getIdDominio() != null)?aplicacion.getIdDominio().toString():null;
-//		queryParam01.setType(idDominio != null ? "INT" : "OBJECT");
-//		queryParam01.setValue(idDominio);
-//		queryParams.add(queryParam01);
-//		
-//		queryParam02.setIndex(2);
-//		queryParam02.setType("STRING");
-//		queryParam02.setValue(aplicacion.getPtbId());
-//		queryParams.add(queryParam02);
-//		
-//		queryParam03.setIndex(3);
-//		queryParam03.setType("STRING");
-//		queryParam03.setValue(aplicacion.getDescripcionCorta());
-//		queryParams.add(queryParam03);
-//		
-//		queryParam04.setIndex(4);
-//		queryParam04.setType("STRING");
-//		queryParam04.setValue(aplicacion.getDescripcionLarga());
-//		queryParams.add(queryParam04);
-//		
-//		queryParam05.setIndex(5);
-//		String idL1 = aplicacion.getIdL1() != null ? aplicacion.getIdL1().toString() : null;  
-//		queryParam05.setType((idL1 != null)?"INT":"OBJECT");
-//		queryParam05.setValue(idL1);
-//		queryParams.add(queryParam05);
-//		
-//		queryParam06.setIndex(6);
-//		String idL2 = aplicacion.getIdL2() != null ? aplicacion.getIdL2().toString() : null;  
-//		queryParam06.setType((aplicacion.getIdL2() != null)?"INT":"OBJECT");
-//		queryParam06.setValue(idL2);
-//		queryParams.add(queryParam06);
-//		
-//		queryParam07.setIndex(7);
-//		String idL3 = aplicacion.getIdL3() != null ? aplicacion.getIdL3().toString() : null;  
-//		queryParam07.setType((idL3 != null)?"INT":"OBJECT");
-//		queryParam07.setValue(idL3);
-//		queryParams.add(queryParam07);
-//		
-//		queryParam08.setIndex(8);
-//		String idPlat1 = (aplicacion.getIdPlat1() != null)? aplicacion.getIdPlat1().toString():null;
-//		queryParam08.setType((idPlat1 != null)?"INT":"OBJECT");
-//		queryParam08.setValue(idPlat1);
-//		queryParams.add(queryParam08);
-//		
-//		queryParam09.setIndex(9);
-//		String idPlat2 = (aplicacion.getIdPlat2() != null)? aplicacion.getIdPlat2().toString():null;
-//		queryParam09.setType((idPlat2 != null)?"INT":"OBJECT");
-//		queryParam09.setValue(idPlat2);
-//		queryParams.add(queryParam09);
-//		
-//		queryParam10.setIndex(10);
-//		String idPlat3 = (aplicacion.getIdPlat3() != null)? aplicacion.getIdPlat3().toString():null;
-//		queryParam10.setType((idPlat3 != null)?"INT":"OBJECT");
-//		queryParam10.setValue(idPlat3);
-//		queryParams.add(queryParam10);
-//		
-//		queryParam11.setIndex(11);
-//		queryParam11.setType("STRING");
-//		queryParam11.setValue(aplicacion.getComentarios());
-//		queryParams.add(queryParam11);
-//		
-//		queryParam12.setIndex(12);
-//		queryParam12.setType("INT");
-//		queryParam12.setValue(aplicacion.getContactosProveedorProveedor().toString());
-//		queryParams.add(queryParam12);
-//		
-//		queryParam13.setIndex(13);
-//		String aplicacionCol = (aplicacion.getAplicacionCol() != null)?aplicacion.getAplicacionCol():null;
-//		queryParam13.setType((aplicacionCol != null)?"STRING" : "OBJECT");
-//		queryParam13.setValue(aplicacionCol);
-//		queryParams.add(queryParam13);
-//		
-//		queryParam14.setIndex(14);
-//		queryParam14.setType("INT");
-//		queryParam14.setValue(csiId.toString());
-//		queryParams.add(queryParam14);
+		List<Data> queryParams = getQueryParamsAplicacion(aplicacion,true);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE " + Constants.APLICACION + " SET Id_Dominio = ? , PTB_ID = ? , DescripcionCorta = ? , DescripcionLarga = ? , Id_L1 = ? , Id_L2 = ? , Id_L3 = ? , Id_Plat1 = ? , Id_Plat2 = ? , Id_Plat3 = ? , Comentarios = ? , `Contactos Proveedor_Proveedor` = ? , APLICACIONcol = ? WHERE CSI_ID = ?");
+		requestParams.put("sql", "UPDATE " + Constants.APLICACION + " SET Id_Dominio = ? , Ptb_Id = ? , Descripcion_Corta = ? , Descripcion_Larga = ? , Id_L1 = ? , Id_L2 = ? , Id_L3 = ? , Id_Plat1 = ? , Id_Plat2 = ? , Id_Plat3 = ? , Comentarios = ? WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -220,7 +124,7 @@ public class AplicacionesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION + " WHERE CSI_ID = ?");
+		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION + " WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -244,7 +148,7 @@ public class AplicacionesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION_PROVEEDOR + " WHERE CSI_ID = ?");
+		requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION_PROVEEDOR + " WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -264,7 +168,7 @@ public class AplicacionesController {
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_PROVEEDOR + " (Id_Proveedor, L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, CSI_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_PROVEEDOR + " (Id_Proveedor , L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, Csi_Id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -284,7 +188,7 @@ public class AplicacionesController {
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR + " SET Id_Proveedor = ? , L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE CSI_ID = ?");
+		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR + " SET Id_Proveedor = ? , L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -310,7 +214,7 @@ public class AplicacionesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION_PROVEEDOR + " WHERE CSI_ID = ?");
+		requestParams.put("sql", "DELETE FROM " + Constants.APLICACION_PROVEEDOR + " WHERE Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -324,7 +228,8 @@ public class AplicacionesController {
 	
 	private List<Data> getQueryParamsAplicacionProveedor(AplicacionProveedor aplicacionProveedor) {
 		List<Data> queryParams = new ArrayList<Data>();
-		Data datos [] = new Data[8]; 
+		
+		Data datos []= new Data[8];
 		
 		datos[0] = Util.createDataObj(aplicacionProveedor.getIdProveedor(), "INT", 1);
 		datos[1] = Util.createDataObj(aplicacionProveedor.getL1Primario(), "INT", 2);
@@ -342,9 +247,15 @@ public class AplicacionesController {
 		return queryParams;
 	}
 	
-	private List<Data> getQueryParamsAplicacion(Aplicacion aplicacion) {
+	private List<Data> getQueryParamsAplicacion(Aplicacion aplicacion, boolean isUpdate) {
 		List<Data> queryParams = new ArrayList<Data>();
-		Data datos [] = new Data[14]; 
+		Data datos [];
+		if(isUpdate){
+			datos = new Data[12]; 
+			datos[11] = Util.createDataObj(aplicacion.getCsiId(), "INT", 12);
+		}else {
+			datos = new Data[11];
+		}
 		
 		datos[0] = Util.createDataObj(aplicacion.getIdDominio(), "INT", 1);
 		datos[1] = Util.createDataObj(aplicacion.getPtbId(), "STRING", 2);
@@ -357,9 +268,6 @@ public class AplicacionesController {
 		datos[8] = Util.createDataObj(aplicacion.getIdPlat2(), "INT", 9);
 		datos[9] = Util.createDataObj(aplicacion.getIdPlat3(), "INT", 10);
 		datos[10] = Util.createDataObj(aplicacion.getComentarios(), "STRING", 11);
-		datos[11] = Util.createDataObj(aplicacion.getContactosProveedorProveedor().toString(), "INT", 12);
-		datos[12] = Util.createDataObj(aplicacion.getAplicacionCol().toString(), "STRING", 13);
-		datos[13] = Util.createDataObj(aplicacion.getCsiId().toString(), "INT", 14);
 		
 		for(Data dato : datos) {
 			queryParams.add(dato);

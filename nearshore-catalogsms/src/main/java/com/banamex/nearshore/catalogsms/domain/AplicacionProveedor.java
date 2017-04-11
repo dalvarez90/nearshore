@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class AplicacionProveedor {
 
-	@NotNull
+	private Integer idAplicacionProveedor;
 	private Integer idProveedor;
 	private Integer csiId;
 	private Integer l1Primario;
@@ -13,7 +13,13 @@ public class AplicacionProveedor {
 	private Integer l2Backup;
 	private Integer l3Primario;
 	private Integer l3Backup;
-	
+		
+	public Integer getIdAplicacionProveedor() {
+		return idAplicacionProveedor;
+	}
+	public void setIdAplicacionProveedor(Integer idAplicacionProveedor) {
+		this.idAplicacionProveedor = idAplicacionProveedor;
+	}
 	public Integer getIdProveedor() {
 		return idProveedor;
 	}

@@ -77,7 +77,7 @@ public class PlataformasController {
 		
 	
 		Data queryParam01= new Data();
-		queryParam01.setIndex(2);
+		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
 		queryParam01.setValue(plataforma.getDescripcion().toString());
 		queryParams.add(queryParam01);
