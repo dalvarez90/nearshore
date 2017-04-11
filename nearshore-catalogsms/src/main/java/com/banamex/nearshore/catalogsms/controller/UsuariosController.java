@@ -32,8 +32,8 @@ public class UsuariosController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
-				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
+		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
+				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
 		
 		Object resultBase = null;
@@ -58,8 +58,8 @@ public class UsuariosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.PrimerNombre, u.SegundoNombe,"
-				+ "u.ApellidoPaterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
+		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
+				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
 				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
@@ -88,7 +88,7 @@ public class UsuariosController {
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
-		queryParam02.setIndex(3);
+		queryParam02.setIndex(2);
 		queryParam02.setType("STRING");
 		queryParam02.setValue(usuario.getPrimerNombre());
 		queryParams.add(queryParam02);
@@ -96,11 +96,11 @@ public class UsuariosController {
 		Data queryParam03 = new Data();
 		queryParam03.setIndex(3);
 		queryParam03.setType("STRING");
-		queryParam03.setValue(usuario.getSegundoNombe());
+		queryParam03.setValue(usuario.getSegundoNombre());
 		queryParams.add(queryParam03);
 		
 		Data queryParam04 = new Data();
-		queryParam04.setIndex(5);
+		queryParam04.setIndex(4);
 		queryParam04.setType("STRING");
 		queryParam04.setValue(usuario.getApellidoPaterno());
 		queryParams.add(queryParam04);
@@ -108,7 +108,7 @@ public class UsuariosController {
 		Data queryParam05 = new Data();
 		queryParam05.setIndex(5);
 		queryParam05.setType("STRING");
-		queryParam05.setValue(usuario.getApellidoPaterno());
+		queryParam05.setValue(usuario.getApellidoMaterno());
 		queryParams.add(queryParam05);
 		
 		Data queryParam06 = new Data();
@@ -143,7 +143,7 @@ public class UsuariosController {
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
 		requestParams.put("sql", "INSERT INTO usuario(email,"
-				+ "PrimerNombre,SegundoNombe,ApellidoPaterno,ApellidoMaterno,"
+				+ "Primer_Nombre,Segundo_Nombre,Apellido_Paterno,ApellidoMaterno,"
 				+ "Clave,Id_perfil,Activo,Dominios,Proveedores) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
@@ -181,7 +181,7 @@ public class UsuariosController {
 		Data queryParam04 = new Data();
 		queryParam04.setIndex(3);
 		queryParam04.setType("STRING");
-		queryParam04.setValue(usuario.getSegundoNombe());
+		queryParam04.setValue(usuario.getSegundoNombre());
 		queryParams.add(queryParam04);
 		
 		Data queryParam05 = new Data();
@@ -235,8 +235,8 @@ public class UsuariosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE usuario SET email = ?,PrimerNombre = ?,"
-				+ "SegundoNombe = ?, ApellidoPaterno = ?,ApellidoMaterno = ?,"
+		requestParams.put("sql", "UPDATE usuario SET email = ?,Primer_Nombre = ?,"
+				+ "Segundo_Nombre = ?, Apellido_Paterno = ?,ApellidoMaterno = ?,"
 				+ "Clave = ?, id_Perfil = ?, Activo= ?, Dominios = ?, Proveedores= ?"
 				+ " WHERE Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
