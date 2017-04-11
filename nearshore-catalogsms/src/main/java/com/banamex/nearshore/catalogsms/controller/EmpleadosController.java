@@ -32,9 +32,9 @@ public class EmpleadosController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT SOE_ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
-						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios "
+						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
 						+ "FROM RECURSO_CITI");
 		
 		Object resultBase = null;
@@ -59,9 +59,9 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT SOE_ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
-						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios "
+						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
 						+ "FROM RECURSO_CITI WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
@@ -83,10 +83,10 @@ public class EmpleadosController {
 		queryParams = getCitiEmployeeParamsFormated(recursoCiti);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO RECURSO_CITI (ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
-				+ "Id_Dominio, Id_Puesto, Id_Ciudad, Ext, Movil, Telefono, Email, Id_ReportaA, Id_CSIs, Comentarios, SOE_ID) "
+		requestParams.put("sql", "INSERT INTO RECURSO_CITI (Apellid_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
+				+ "Id_Dominio, Id_Puesto, Id_Ciudad, Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios, SOE_ID) "
 				+ "values(?, ?, ?, ?, ?, "
-				+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ "?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -110,9 +110,9 @@ public class EmpleadosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("sql", "UPDATE RECURSO_CITI SET "
-				+ "ApellidoPaterno = ?, ApellidoMaterno = ?, PrimerNombre = ?, SegundoNombre = ?, "
+				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Dominio = ?, Id_Puesto = ?, Id_Ciudad = ?, Ext = ?, Movil = ?, Telefono = ?, "
-				+ "Email = ?, Id_ReportaA = ?, Id_CSIs = ?, Comentarios = ? "
+				+ "Email = ?, Id_ReportaA = ?, Comentarios = ? "
 				+ "WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
@@ -156,12 +156,12 @@ public class EmpleadosController {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT Id, Id_Proveedor, NumeroEmpleado, ClaveEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT Id, Id_Proveedor, Numero_Empleado, Clave_Empleado, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
 				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios "
+				+ " Comentarios "
 				+ "FROM RECURSO_PROVEEDOR");
 		
 		Object resultBase = null; 
@@ -186,13 +186,13 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 2);
-		requestParams.put("sql", "SELECT Id, Id_Proveedor, NumeroEmpleado, ClaveEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "SELECT Id, Id_Proveedor, Numero_Empleado, Clave_Empleado, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
 				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios "
-				+ "FROM RECURSO_PROVEEDOR WHERE ClaveEmpleado = ?");
+				+ " Comentarios "
+				+ "FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -212,13 +212,13 @@ public class EmpleadosController {
 		queryParams = getSupplierEmployeeParamsFormated(recursoProveedor);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "insert into recurso_proveedor (Id, Id_Proveedor, NumeroEmpleado, "
-				+ "ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, "
+		requestParams.put("sql", "insert into recurso_proveedor ( Id_Proveedor, Numero_Empleado, "
+				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
 				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, "
-				+ "Id_CSIs, Comentarios, ClaveEmpleado) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ " Comentarios, Clave_Empleado) "
+				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -242,13 +242,13 @@ public class EmpleadosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("sql", "UPDATE RECURSO_PROVEEDOR SET "
-				+ "Id = ?, Id_Proveedor = ?, NumeroEmpleado = ?, "
-				+ "ApellidoPaterno = ?, ApellidoMaterno = ?, PrimerNombre = ?, SegundoNombre = ?, "
+				+ " Id_Proveedor = ?, Numero_Empleado = ?, "
+				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Ciudad = ?, Movil_Personal = ?, Telefono_Particular = ?, Email_Personal = ?, "
 				+ "Id_Puesto = ?, Id_Reporta_A = ?, Telefono_Proveedor = ?, Ext_Proveedor = ?, "
 				+ "Email_Proveedor = ?, SOE_ID = ?, Ext_Citi = ?, Email_Citi = ?, "
-				+ "Id_CSIs = ?, Comentarios = ? "
-				+ "WHERE ClaveEmpleado = ?");
+				+ " Comentarios = ? "
+				+ "WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -273,7 +273,7 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM RECURSO_PROVEEDOR WHERE ClaveEmpleado = ?");
+		requestParams.put("sql", "DELETE FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 

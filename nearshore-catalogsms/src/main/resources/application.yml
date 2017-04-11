@@ -1,6 +1,6 @@
 variables:
   eureka:
-    host: hostEureka
+    host: localhost
     port: 8761
 info:
   component: Catalogs microservice (nearshore-catalogsms)
