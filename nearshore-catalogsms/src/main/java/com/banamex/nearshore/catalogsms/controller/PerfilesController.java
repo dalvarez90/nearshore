@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banamex.nearshore.catalogsms.domain.Dominio;
+import com.banamex.nearshore.catalogsms.domain.Perfil;
 import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
@@ -69,7 +69,7 @@ public class PerfilesController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-	public Object newDomain(@RequestBody Dominio dominio) {
+	public Object newDomain(@RequestBody Perfil perfil) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -78,7 +78,7 @@ public class PerfilesController {
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
-		queryParam01.setValue(dominio.getDescripcion());
+		queryParam01.setValue(perfil.getDescripcion());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
@@ -96,14 +96,14 @@ public class PerfilesController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editDomain(@PathVariable Integer id, @RequestBody Dominio dominio) {
+	public Object editDomain(@PathVariable Integer id, @RequestBody Perfil perfil) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
-		queryParam01.setValue(dominio.getDescripcion());
+		queryParam01.setValue(perfil.getDescripcion());
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
