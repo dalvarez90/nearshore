@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banamex.nearshore.catalogsms.domain.Aplicacion;
 import com.banamex.nearshore.catalogsms.domain.AplicacionProveedor;
+import com.banamex.nearshore.catalogsms.domain.AplicacionRecursoCiti;
 import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.DatabaseMicroserviceClientService;
@@ -160,15 +161,15 @@ public class AplicacionesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{csiId}/empleados/proveedores", method = RequestMethod.POST, produces = "application/json")
-	public Object newAplicacionProveedor(@PathVariable Integer csiId , @RequestBody @Valid AplicacionProveedor aplicacionProveedor) {
+	@RequestMapping(value = "/{idProveedor}/empleados/proveedores", method = RequestMethod.POST, produces = "application/json")
+	public Object newAplicacionProveedor(@PathVariable Integer idProveedor, @RequestBody @Valid AplicacionProveedor aplicacionProveedor) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		aplicacionProveedor.setCsiId(csiId);
+		aplicacionProveedor.setIdProveedor(idProveedor);
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_PROVEEDOR + " (Id_Proveedor , L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, Csi_Id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_PROVEEDOR + " (L1_Primario, L1_Backup, L2_Primario, L2_Backup, L3_Primario, L3_Backup, Id_Proveedor,Csi_Id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -180,15 +181,15 @@ public class AplicacionesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{csiId}/empleados/proveedores", method = RequestMethod.PUT, produces = "application/json")
-	public Object editAplicacionProveedor(@PathVariable Integer csiId, @RequestBody @Valid AplicacionProveedor aplicacionProveedor) {
+	@RequestMapping(value = "/{idProveedor}/empleados/proveedores", method = RequestMethod.PUT, produces = "application/json")
+	public Object editAplicacionProveedor(@PathVariable Integer idProveedor, @RequestBody @Valid AplicacionProveedor aplicacionProveedor) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
-		aplicacionProveedor.setCsiId(csiId);
+		aplicacionProveedor.setIdProveedor(idProveedor);
 		List<Data> queryParams = getQueryParamsAplicacionProveedor(aplicacionProveedor);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR + " SET Id_Proveedor = ? , L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE Csi_Id = ?");
+		requestParams.put("sql", "UPDATE "+Constants.APLICACION_PROVEEDOR + " SET L1_Primario = ? , L1_Backup = ? , L2_Primario = ? , L2_Backup = ? , L3_Primario = ? , L3_Backup = ? WHERE Id_Proveedor = ? and Csi_Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -226,18 +227,128 @@ public class AplicacionesController {
 		return resultBase;
 	}
 	
+	//
+	@RequestMapping(value = "/{csiId}/empleados/citi", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveAllAplicacionRecursoCiti(@PathVariable Integer csiId) {
+		HashMap<String, Object> requestParams = new HashMap<String, Object>();
+			
+			List<Data> queryParams = new ArrayList<>();
+			Data queryParam01 = new Data();
+			queryParam01.setIndex(1);
+			queryParam01.setType("INT");
+			queryParam01.setValue(csiId.toString());
+			queryParams.add(queryParam01);
+			
+			requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
+			requestParams.put("sql", "SELECT * FROM " + Constants.APLICACION_RECURSO_CITI + " WHERE aplicacion_Csi_Id = ?");
+			requestParams.put("data", queryParams);
+			
+			Object resultBase = null;
+			try {
+				resultBase = databaseMicroserviceClientService.callBase(requestParams);
+			} catch (Exception e) {
+				throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+			}
+			return resultBase;
+		}
+		
+		@RequestMapping(value = "/{idRecursoCiti}/empleados/citi", method = RequestMethod.POST, produces = "application/json")
+		public Object newAplicacionRecursoCiti(@PathVariable String idRecursoCiti, @RequestBody @Valid AplicacionRecursoCiti aplicacionRecursoCiti) {
+			HashMap<String, Object> requestParams = new HashMap<String, Object>();
+			
+			aplicacionRecursoCiti.setIdRecursoCiti(idRecursoCiti);
+			List<Data> queryParams = getQueryParamsAplicacionRecursoCiti(aplicacionRecursoCiti);
+			
+			requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+			requestParams.put("sql", "INSERT INTO " + Constants.APLICACION_RECURSO_CITI + " (aplicacion_Csi_Id, recurso_citi_Soe_Id) VALUES (?, ?)");
+			requestParams.put("data", queryParams);
+			
+			Object resultBase = null;
+			try {
+				resultBase = databaseMicroserviceClientService.callBase(requestParams);
+			} catch (Exception e) {
+				throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+			}
+			return resultBase;
+		}
+		
+		@RequestMapping(value = "/{idRecursoCiti}/empleados/citi", method = RequestMethod.PUT, produces = "application/json")
+		public Object editAplicacionRecursoCiti(@PathVariable String idRecursoCiti, @RequestBody @Valid AplicacionRecursoCiti aplicacionRecursoCiti) {
+			HashMap<String, Object> requestParams = new HashMap<String, Object>();
+			
+			aplicacionRecursoCiti.setIdRecursoCiti(idRecursoCiti);
+			List<Data> queryParams = getQueryParamsAplicacionRecursoCiti(aplicacionRecursoCiti);
+			
+			requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+			requestParams.put("sql", "UPDATE "+Constants.APLICACION_RECURSO_CITI + " SET aplicacion_Csi_Id = ? WHERE recurso_citi_Soe_Id = ?");
+			requestParams.put("data", queryParams);
+			
+			Object resultBase = null;
+			try {
+				resultBase = databaseMicroserviceClientService.callBase(requestParams);
+			} catch (Exception e) {
+				throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+			}
+			
+			return resultBase;
+		}
+
+		@RequestMapping(value = "/{csiId}/empleados/citi", method = RequestMethod.DELETE, produces = "application/json")
+		public Object removeAplicacionRecursoCiti(@PathVariable Integer csiId) {
+			HashMap<String, Object> requestParams = new HashMap<String, Object>();
+			
+			List<Data> queryParams = new ArrayList<>();
+			
+			Data queryParam01 = new Data();
+			queryParam01.setIndex(1);
+			queryParam01.setType("INT");
+			queryParam01.setValue(csiId.toString());
+			queryParams.add(queryParam01);
+			
+			requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
+			requestParams.put("sql", "DELETE FROM " + Constants.APLICACION_RECURSO_CITI + " WHERE aplicacion_Csi_Id = ?");
+			requestParams.put("data", queryParams);
+			
+			Object resultBase = null;
+			try {
+				resultBase = databaseMicroserviceClientService.callBase(requestParams);
+			} catch (Exception e) {
+				throw new NearshoreDatabaseMicroserviceException(e.getMessage());
+			}
+			return resultBase;
+		}
+
+	private List<Data> getQueryParamsAplicacionRecursoCiti(AplicacionRecursoCiti aplicacionRecursoCiti) {
+		List<Data> queryParams = new ArrayList<Data>();
+				
+		Data datos []= new Data[2];
+				
+		datos[0] = Util.createDataObj(aplicacionRecursoCiti.getCsiId(), "INT", 1);
+		datos[1] = Util.createDataObj(aplicacionRecursoCiti.getIdRecursoCiti(), "STRING", 2);
+				
+		for(Data dato : datos) {
+			queryParams.add(dato);
+		}
+					
+		return queryParams;
+	}
+			
+			
+	
+	//
+	
 	private List<Data> getQueryParamsAplicacionProveedor(AplicacionProveedor aplicacionProveedor) {
 		List<Data> queryParams = new ArrayList<Data>();
 		
 		Data datos []= new Data[8];
 		
-		datos[0] = Util.createDataObj(aplicacionProveedor.getIdProveedor(), "INT", 1);
-		datos[1] = Util.createDataObj(aplicacionProveedor.getL1Primario(), "INT", 2);
-		datos[2] = Util.createDataObj(aplicacionProveedor.getL1Backup(), "INT", 3);
-		datos[3] = Util.createDataObj(aplicacionProveedor.getL2Primario(), "INT", 4);
-		datos[4] = Util.createDataObj(aplicacionProveedor.getL2Backup(), "INT", 5);
-		datos[5] = Util.createDataObj(aplicacionProveedor.getL3Primario(), "INT", 6);
-		datos[6] = Util.createDataObj(aplicacionProveedor.getL3Backup(), "INT", 7);
+		datos[0] = Util.createDataObj(aplicacionProveedor.getL1Primario(), "INT", 1);
+		datos[1] = Util.createDataObj(aplicacionProveedor.getL1Backup(), "INT", 2);
+		datos[2] = Util.createDataObj(aplicacionProveedor.getL2Primario(), "INT", 3);
+		datos[3] = Util.createDataObj(aplicacionProveedor.getL2Backup(), "INT", 4);
+		datos[4] = Util.createDataObj(aplicacionProveedor.getL3Primario(), "INT", 5);
+		datos[5] = Util.createDataObj(aplicacionProveedor.getL3Backup(), "INT", 6);
+		datos[6] = Util.createDataObj(aplicacionProveedor.getIdProveedor(), "INT", 7);
 		datos[7] = Util.createDataObj(aplicacionProveedor.getCsiId(), "INT", 8);
 		
 		for(Data dato : datos) {
@@ -283,5 +394,4 @@ public class AplicacionesController {
 		public ResultBase getResultQuery(@RequestBody HashMap<String, Object> datos);
 		
 	}
-
 }
