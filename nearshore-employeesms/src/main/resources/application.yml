@@ -1,6 +1,6 @@
 variables:
   eureka:
-    host: hostEureka
+    host: localHost
     port: 8761
 info:
   component: Domains and Applications microservice (nearshore-employeesms)
