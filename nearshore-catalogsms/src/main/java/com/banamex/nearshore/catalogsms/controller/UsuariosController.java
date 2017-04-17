@@ -34,7 +34,7 @@ public class UsuariosController {
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
+				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
 		
 		Object resultBase = null;
 		try {
@@ -60,7 +60,7 @@ public class UsuariosController {
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM usuario u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
+				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
@@ -142,7 +142,7 @@ public class UsuariosController {
 		queryParams.add(queryParam10);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO usuario(email,"
+		requestParams.put("sql", "INSERT INTO USUARIO (email,"
 				+ "Primer_Nombre,Segundo_Nombre,Apellido_Paterno,ApellidoMaterno,"
 				+ "Clave,Id_perfil,Activo,Dominios,Proveedores) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
@@ -193,7 +193,7 @@ public class UsuariosController {
 		Data queryParam06 = new Data();
 		queryParam06.setIndex(5);
 		queryParam06.setType("STRING");
-		queryParam06.setValue(usuario.getApellidoPaterno());
+		queryParam06.setValue(usuario.getApellidoMaterno());
 		queryParams.add(queryParam06);
 		
 		Data queryParam07 = new Data();
@@ -235,7 +235,7 @@ public class UsuariosController {
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE usuario SET email = ?,Primer_Nombre = ?,"
+		requestParams.put("sql", "UPDATE USUARIO SET email = ?,Primer_Nombre = ?,"
 				+ "Segundo_Nombre = ?, Apellido_Paterno = ?,ApellidoMaterno = ?,"
 				+ "Clave = ?, id_Perfil = ?, Activo= ?, Dominios = ?, Proveedores= ?"
 				+ " WHERE Id_Usuarios = ?");
@@ -263,7 +263,7 @@ public class UsuariosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM usuario WHERE Id_Usuarios = ?");
+		requestParams.put("sql", "DELETE FROM USUARIO WHERE Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
