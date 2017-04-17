@@ -34,7 +34,7 @@ public class UsuariosController {
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join cat_perfil p on u.Id_Perfil=p.Id_Perfil");
+				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join CAT_PERFIL p on u.Id_Perfil=p.Id_Perfil");
 		
 		Object resultBase = null;
 		try {
@@ -60,7 +60,7 @@ public class UsuariosController {
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join cat_perfil p on u.Id_Perfil=p.Id_Perfil"
+				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join CAT_PERFIL p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
