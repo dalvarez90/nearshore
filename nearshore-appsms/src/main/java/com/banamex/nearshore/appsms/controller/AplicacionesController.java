@@ -60,11 +60,12 @@ public class AplicacionesController {
 		queryParam01.setType("INT");
 		queryParam01.setValue(idDom.toString());
 		queryParams.add(queryParam01);
+		
 
 		Data queryParam02 = new Data();
-		queryParam01.setIndex(2);
-		queryParam01.setType("INT");
-		queryParam01.setValue(scid.toString());
+		queryParam02.setIndex(2);
+		queryParam02.setType("INT");
+		queryParam02.setValue(scid.toString());
 		queryParams.add(queryParam02);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
@@ -133,7 +134,8 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/plataformas/{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/plataformas/{id"
+			+ "}}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveApplicationsOfPlatform(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
