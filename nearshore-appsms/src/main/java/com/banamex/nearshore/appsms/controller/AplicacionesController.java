@@ -133,7 +133,7 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}/plataformas", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/plataformas/{id}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveApplicationsOfPlatform(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
