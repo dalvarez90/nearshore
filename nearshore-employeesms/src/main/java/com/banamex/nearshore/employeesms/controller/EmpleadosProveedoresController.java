@@ -28,7 +28,7 @@ public class EmpleadosProveedoresController {
 	/*
 	 * Miembro que devuelve los empleados proveedor de un proveedor especifico
 	 */
-	@RequestMapping(value = "/empleados/proveedores/proovedor/{idProveedor}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/proveedor/{idProveedor}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveEmployeesByIdSupplier(@PathVariable Integer idProveedor) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();		
 		
@@ -57,7 +57,7 @@ public class EmpleadosProveedoresController {
 	/*
 	 * Miembro que devuelve los empleados proveedores de una determinanda ciudad
 	 */
-	@RequestMapping(value = "/empleados/proveedores/ciudad/{idCiudad}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/ciudad/{idCiudad}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveSupplierEmployeesByIdCiudad(@PathVariable Integer idCiudad) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();		
 		
@@ -86,7 +86,7 @@ public class EmpleadosProveedoresController {
 	/*
 	 * Miembro que devuelve los empleados proveedores de un determinado puesto
 	 */
-	@RequestMapping(value = "/empleados/proveedores/puesto/{idPuesto}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/puesto/{idPuesto}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveSupplierEmployeesByIdJob(@PathVariable Integer idPuesto) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();		
 		
@@ -115,7 +115,7 @@ public class EmpleadosProveedoresController {
 	/*
 	 * Miembro que devuelve los empleados proveedores de una determinada ciudad y determinado puesto
 	 */
-	@RequestMapping(value = "/empleados/proovedores/ciudad/{idCiudad}/puesto/{idPuesto}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/ciudad/{idCiudad}/puesto/{idPuesto}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveSupplierEmployeesByIdCityAndIdJob(@PathVariable Integer idCiudad , @PathVariable Integer idPuesto) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();		
 		
