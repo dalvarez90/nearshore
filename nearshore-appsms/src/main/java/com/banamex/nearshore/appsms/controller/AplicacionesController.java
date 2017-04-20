@@ -25,22 +25,19 @@ public class AplicacionesController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 
-	/*
-	 * Endpoint que devuelve las aplicaciones por un id de dominio 
-	 */
-	@RequestMapping(value = "/dominio/{idDominio}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveApplicationsByDomain(@PathVariable Integer idDominio) {
+	@RequestMapping(value = "/dominio/{id}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveApplicationsByDomain(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(idDominio.toString());
+		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT aplic.* FROM APLICACION aplic WHERE Id_Dominio = ?");
+		requestParams.put("sql", "SELECT CSI_ID FROM APLICACION WHERE Id_Dominio = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -53,9 +50,6 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	/*
-	 * Endpoint que devuelve aplicaciones por sci_Id de aplicacion y id de dominio
-	 */
 	@RequestMapping(value = "/{scid}/dominio/{idDom}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveApplicationsByDomainAndScid(@PathVariable Integer idDom, @PathVariable Integer scid) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -66,6 +60,7 @@ public class AplicacionesController {
 		queryParam01.setType("INT");
 		queryParam01.setValue(idDom.toString());
 		queryParams.add(queryParam01);
+		
 
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
@@ -74,7 +69,7 @@ public class AplicacionesController {
 		queryParams.add(queryParam02);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT aplic.* FROM APLICACION aplic WHERE Id_Dominio = ? and Csi_id = ?");
+		requestParams.put("sql", "SELECT CSI_ID FROM APLICACION WHERE Id_Dominio = ? and Csi_id = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -87,22 +82,19 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	/*
-	 * Miembro que devuelve los proveedores de determinada aplicacion
-	 */
-	@RequestMapping(value = "/{idAplicacion}/proveedores", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveProviderOfApplication(@PathVariable Integer idAplicacion) {
+	@RequestMapping(value = "/{id}/proveedores", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveProviderOfApplication(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(idAplicacion.toString());
+		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "select distinct cp.id, cp.Descripcion from APLICACION_PROVEEDOR "
+		requestParams.put("sql", "select cp.id, cp.Descripcion from APLICACION_PROVEEDOR "
 				+ "ap join CAT_PROVEEDOR cp on  ap.Id_Proveedor=cp.Id where ap.Csi_Id = ?");
 		requestParams.put("data", queryParams);
 
@@ -116,18 +108,15 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	/*
-	 * Miembro que devuelve las plataformas que maneja una aplicacion 
-	 */
-	@RequestMapping(value = "/{idAplicacion}/plataformas", method = RequestMethod.GET, produces = "application/json")
-	public Object retrievePlatformsOfApplications(@PathVariable Integer idAplicacion) {
+	@RequestMapping(value = "/{id}/plataformas", method = RequestMethod.GET, produces = "application/json")
+	public Object retrievePlatformsOfApplications(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(idAplicacion.toString());
+		queryParam01.setValue(id.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
@@ -145,10 +134,8 @@ public class AplicacionesController {
 		return resultBase;
 	}
 
-	/*
-	 * Miembro que devuelve las aplicaciones relacionadas a determinada plataforma
-	 */
-	@RequestMapping(value = "/plataformas/{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/plataformas/{id"
+			+ "}}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveApplicationsOfPlatform(@PathVariable Integer id) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
