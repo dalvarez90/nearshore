@@ -70,7 +70,7 @@ docker build -t nsemployeesmsimg . # construir imagen
 docker run    --link   eureka:hostEureka  --name nsemployeesmscont  -d -p 7703:7703 nsemployeesmsimg .
 
 
-|exec /bin/bash
+exec /bin/bash
 ---------------------------------------
 
 docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password --volume=/root/docker/mysql/conf.d:/etc/mysql/conf.d -d mysql
