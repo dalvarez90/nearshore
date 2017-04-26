@@ -1,0 +1,72 @@
+variables:
+  eureka:
+    #host: localhost
+    host: hostEureka
+    port: 8761
+      
+    
+info:
+  component: Nearshore gateway app (Netflix Zuul)
+ 
+server:
+  port: 8080
+security:
+  sessions: ALWAYS
+spring:
+  config:
+    name: nearshore-gateway
+  application:
+    name: nearshore-gateway
+  session:
+    store-type: redis
+ 
+    
+zuul:
+  routes:
+    dashboardEureka:
+      path: /eureka/**
+      url: http://${variables.eureka.host}:${variables.eureka.port}/
+
+    phpMyadmin:
+      path: /phpMyadmin/**
+      serviceId: phpMyadmin
+
+    # Microservicio DB
+    mcTDCdbMain:
+      path: /mcTDCdbMain/**
+      serviceId: mcTDCdbMain
+
+    # Microservicio nearshore-catalogsms
+    nearshore-catalogsms:
+      path:  /catalogsms/**
+      serviceId: nearshore-catalogsms
+
+    # Microservicio nearshore-appsms
+    nearshore-appsms:
+      path:  /appsms/**
+      serviceId: nearshore-appsms
+
+    # Microservicio nearshore-employeesms
+    nearshore-employeesms:
+      path:  /employeesms/**
+      serviceId: nearshore-employeesms
+
+
+eureka:
+  client:
+  
+    serviceUrl:
+      defaultZone: http://${variables.eureka.host}:${variables.eureka.port}/eureka/
+    registerWithEureka: true
+    
+
+logging:
+  level:
+    banamex.nearshore: DEBUG
+
+       
+#10 minutos en timeout de respuesta y 5 minutos para tratar de conectars
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 600000
+ribbon:
+  ConnectTimeout: 300000
+  ReadTimeout: 600000
