@@ -26,12 +26,16 @@ public class ProveedoresController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 
+	/*
+	 * GET PROVEEDOR
+	 * El endpoint devuelve un listado con los proveedores de aplicaciones de CitiBanamex.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllProovedores() {
 		HashMap<String, Object> requestParams = new HashMap<>();
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PROVEEDOR");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PROVEEDOR);
 		
 		Object resultBase = null;
 		try {
@@ -43,19 +47,23 @@ public class ProveedoresController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveProveedorById(@PathVariable Integer id) {
+	/*
+	 * GET PROVEEDOR
+	 * Endpoint que devuelve un proveedor por id.
+	 */
+	@RequestMapping(value = "/{idProveedor}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveProveedorById(@PathVariable Integer idProveedor) {
 
 		HashMap<String, Object> requestParams = new HashMap<>();
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idProveedor.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PROVEEDOR WHERE ID = ?");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PROVEEDOR+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -68,6 +76,10 @@ public class ProveedoresController {
 		return resultBase;
 	}
 
+	/*
+	 * POST PROVEEDOR
+	 * Endpoint que agreda un nuevo proveedor.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newProveedor(@RequestBody Proveedor proveedor) {
 
@@ -75,7 +87,6 @@ public class ProveedoresController {
 
 		List<Data> queryParams = new ArrayList<>();
 		
-
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
@@ -83,7 +94,7 @@ public class ProveedoresController {
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_PROVEEDOR (Descripcion) values (?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PROVEEDOR+" (Descripcion) values (?)");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -96,8 +107,12 @@ public class ProveedoresController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editProveedor(@PathVariable Integer id, @RequestBody Proveedor proveedor) {
+	/*
+	 * PUT PROVEEDOR
+	 * Endpoint que actualiza la informacion de un proveedor.
+	 */
+	@RequestMapping(value = "/{idProveedor}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editProveedor(@PathVariable Integer idProveedor, @RequestBody Proveedor proveedor) {
 
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
@@ -111,11 +126,11 @@ public class ProveedoresController {
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("INT");
-		queryParam02.setValue(id.toString());
+		queryParam02.setValue(idProveedor.toString());
 		queryParams.add(queryParam02);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE CAT_PROVEEDOR SET Descripcion = ? WHERE id = ?");
+		requestParams.put("sql", "UPDATE "+Constants.CAT_PROVEEDOR+" SET Descripcion = ? WHERE id = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -128,8 +143,12 @@ public class ProveedoresController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeProveedor(@PathVariable Integer id) {
+	/*
+	 * DELETE PROVEEDOR
+	 * Endpoint que elimina un proveedor.
+	 */
+	@RequestMapping(value = "/{idProveedor}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeProveedor(@PathVariable Integer idProveedor) {
 
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
@@ -137,11 +156,11 @@ public class ProveedoresController {
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idProveedor.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM CAT_PROVEEDOR WHERE Id = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.CAT_PROVEEDOR+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;

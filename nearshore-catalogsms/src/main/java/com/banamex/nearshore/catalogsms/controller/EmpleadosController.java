@@ -19,6 +19,7 @@ import com.banamex.nearshore.catalogsms.domain.RecursoProveedor;
 import com.banamex.nearshore.catalogsms.exception.NearshoreDatabaseMicroserviceException;
 import com.banamex.nearshore.databasems.Data;
 import com.banamex.nearshore.databasems.ResultBase;
+import com.banamex.nearshore.util.Constants;
 
 @RestController
 @RequestMapping("empleados")
@@ -27,6 +28,10 @@ public class EmpleadosController {
 	@Autowired
 	DbMicroserviceClient databaseMicroserviceClient;
 
+	/*
+	 * GET EMPLEADOS(CITI)
+	 * Endpoint que devuelve un listado de los empleados de CitiBanamex.
+	 */
 	@RequestMapping(value = "/citi", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllCitiEmployees() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -35,7 +40,7 @@ public class EmpleadosController {
 		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
 						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
-						+ "FROM RECURSO_CITI");
+						+ "FROM "+Constants.RECURSO_CITI);
 		
 		Object resultBase = null;
 		try{
@@ -47,6 +52,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 	
+	/*
+	 * GET EMPLEADOS(CITI)
+	 * Endpoint que obtiene un empleado de citi por su soeid.
+	 */
 	@RequestMapping(value = "/citi/{soeid}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveCitiEmployeeById(@PathVariable String soeid) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -62,7 +71,7 @@ public class EmpleadosController {
 		requestParams.put("sql", "SELECT SOE_ID, Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 						+ "Id_Dominio, Id_Puesto, Id_Ciudad, "
 						+ "Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios "
-						+ "FROM RECURSO_CITI WHERE SOE_ID = ?");
+						+ "FROM "+Constants.RECURSO_CITI+" WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -75,6 +84,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 	
+	/*
+	 * POST EMPLEADOS(CITI)
+	 * Endpoint que agreda un empleado a citi.
+	 */
 	@RequestMapping(value = "/citi", method = RequestMethod.POST, produces = "application/json")
 	public Object newCitiEmployee(@RequestBody @Valid RecursoCiti recursoCiti) {
 		if(recursoCiti.getSoe_id() == null){
@@ -85,7 +98,7 @@ public class EmpleadosController {
 		queryParams = getCitiEmployeeParamsFormated(recursoCiti);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "INSERT INTO RECURSO_CITI (Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
+		requestParams.put("sql", "INSERT INTO "+Constants.RECURSO_CITI+" (Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Dominio, Id_Puesto, Id_Ciudad, Ext, Movil, Telefono, Email, Id_ReportaA, Comentarios, SOE_ID) "
 				+ "values(?, ?, ?, ?, "
 				+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -101,6 +114,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 
+	/*
+	 * PUT EMPLEADOS(CITI)
+	 * El endpoint permite la edición de la información de un empleado por su soeid de CitiBanamex existente.
+	 */
 	@RequestMapping(value = "/citi/{soeid}", method = RequestMethod.PUT, produces = "application/json")
 	public Object editCitiEmployee(@PathVariable String soeid, @RequestBody @Valid RecursoCiti recursoCiti) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -111,7 +128,7 @@ public class EmpleadosController {
 		queryParams = getCitiEmployeeParamsFormated(recursoCiti);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE RECURSO_CITI SET "
+		requestParams.put("sql", "UPDATE "+Constants.RECURSO_CITI+" SET "
 				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Dominio = ?, Id_Puesto = ?, Id_Ciudad = ?, Ext = ?, Movil = ?, Telefono = ?, "
 				+ "Email = ?, Id_ReportaA = ?, Comentarios = ? "
@@ -127,7 +144,11 @@ public class EmpleadosController {
 		
 		return resultBase;
 	}
-	
+
+	/*
+	 * DELETE EMPLEADOS(CITI)
+	 * El endpoint permite la eliminación de un empleado por su soeid de CitiBanamex existente.
+	 */
 	@RequestMapping(value = "/citi/{soeid}", method = RequestMethod.DELETE, produces = "application/json")
 	public Object removeCitiEmployee(@PathVariable String soeid) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -140,7 +161,7 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM RECURSO_CITI WHERE SOE_ID = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.RECURSO_CITI+" WHERE SOE_ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -152,7 +173,11 @@ public class EmpleadosController {
 		
 		return resultBase;
 	}
-	
+
+	/*
+	 * GET EMPLEADOS(PROVEEDORES)
+	 * El endpoint devuelve un listado de los empleados de los diferentes proveedores de CitiBanamex.
+	 */
 	@RequestMapping(value = "/proveedores", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllSupplierEmployees() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -163,7 +188,7 @@ public class EmpleadosController {
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
 				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, Comentarios "
-				+ "FROM RECURSO_PROVEEDOR");
+				+ "FROM "+Constants.RECURSO_PROVEEDOR);
 		
 		Object resultBase = null; 
 		try{
@@ -175,6 +200,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 	
+	/*
+	 * GET EMPLEADOS(PROVEEDORES)
+	 * Endpoint que obtiene empleados de un proveedor por la clave del empleado.
+	 */
 	@RequestMapping(value = "/proveedores/{claveEmpleado}", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveSupplierEmployeeById(@PathVariable Integer claveEmpleado) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -192,7 +221,7 @@ public class EmpleadosController {
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
 				+ "Email_Proveedor, SOE_ID, Ext_Citi, Email_Citi, Comentarios "
-				+ "FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
+				+ "FROM "+Constants.RECURSO_PROVEEDOR+" WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 
@@ -205,6 +234,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 	
+	/*
+	 * POST EMPLEADOS(PROVEEDORES)
+	 * El endpoint agrega un nuevo empleado a un proveedor especifico.
+	 */
 	@RequestMapping(value = "/proveedores", method = RequestMethod.POST, produces = "application/json")
 	public Object newSupplierEmployee(@RequestBody @Valid RecursoProveedor recursoProveedor) {
 		if(recursoProveedor.getClaveEmpleado() == null){
@@ -215,7 +248,7 @@ public class EmpleadosController {
 		queryParams = getSupplierEmployeeParamsFormated(recursoProveedor);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "insert into recurso_proveedor (Id_Proveedor, "
+		requestParams.put("sql", "insert into "+Constants.RECURSO_PROVEEDOR+" (Id_Proveedor, "
 				+ "Apellido_Paterno, Apellido_Materno, Primer_Nombre, Segundo_Nombre, "
 				+ "Id_Ciudad, Movil_Personal, Telefono_Particular, Email_Personal, "
 				+ "Id_Puesto, Id_Reporta_A, Telefono_Proveedor, Ext_Proveedor, "
@@ -233,6 +266,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 
+	/*
+	 * PUT EMPLEADOS(PROVEEDORES)
+	 * El endpoint permite la edición de la información de un empleado existente de un proveedor.
+	 */
 	@RequestMapping(value = "/proveedores/{claveEmpleado}", method = RequestMethod.PUT, produces = "application/json")
 	public Object editSupplierEmployee(@PathVariable Integer claveEmpleado, @RequestBody @Valid RecursoProveedor recursoProveedor) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -243,7 +280,7 @@ public class EmpleadosController {
 		queryParams = getSupplierEmployeeParamsFormated(recursoProveedor);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "UPDATE RECURSO_PROVEEDOR SET "
+		requestParams.put("sql", "UPDATE "+Constants.RECURSO_PROVEEDOR+" SET "
 				+ "Id_Proveedor = ?, "
 				+ "Apellido_Paterno = ?, Apellido_Materno = ?, Primer_Nombre = ?, Segundo_Nombre = ?, "
 				+ "Id_Ciudad = ?, Movil_Personal = ?, Telefono_Particular = ?, Email_Personal = ?, "
@@ -262,6 +299,10 @@ public class EmpleadosController {
 		return resultBase;
 	}
 
+	/*
+	 * DELETE EMPLEADOS(PROVEEDORES)
+	 * El endpoint permite la eliminación de los empleados existentes de un proveedor.
+	 */
 	@RequestMapping(value = "/proveedores/{claveEmpleado}", method = RequestMethod.DELETE, produces = "application/json")
 	public Object removeSupplierEmployee(@PathVariable Integer claveEmpleado) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -274,7 +315,7 @@ public class EmpleadosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", 1);
-		requestParams.put("sql", "DELETE FROM RECURSO_PROVEEDOR WHERE Clave_Empleado = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.RECURSO_PROVEEDOR+" WHERE Clave_Empleado = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null; 

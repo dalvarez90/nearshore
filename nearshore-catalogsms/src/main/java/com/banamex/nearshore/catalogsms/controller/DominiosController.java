@@ -26,12 +26,16 @@ public class DominiosController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
+	/*
+	 * GET DOMINIOS
+	 * El endpoint devuelve un listado de dominios.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_DOMINIO");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_DOMINIO);
 		
 		Object resultBase = null;
 		try {
@@ -43,19 +47,23 @@ public class DominiosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveDomainById(@PathVariable Integer id) {
+	/*
+	 * GET DOMINIOS
+	 * Devuelve un dominio por id.
+	 */
+	@RequestMapping(value = "/{idDominio}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveDomainById(@PathVariable Integer idDominio) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idDominio.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_DOMINIO WHERE ID = ?");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_DOMINIO+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -68,6 +76,10 @@ public class DominiosController {
 		return resultBase;
 	}
 	
+	/*
+	 * POST DOMINIOS
+	 * El endpoint agrega un nuevo dominio.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newDomain(@RequestBody Dominio dominio) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -82,7 +94,7 @@ public class DominiosController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_DOMINIO (Descripcion) VALUES (?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_DOMINIO+" (Descripcion) VALUES (?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -95,8 +107,12 @@ public class DominiosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editDomain(@PathVariable Integer id, @RequestBody Dominio dominio) {
+	/*
+	 * PUT DOMINIOS
+	 * Edita la información de un dominio.
+	 */
+	@RequestMapping(value = "/{idDominio}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editDomain(@PathVariable Integer idDominio, @RequestBody Dominio dominio) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -109,11 +125,11 @@ public class DominiosController {
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("INT");
-		queryParam02.setValue(id.toString());
+		queryParam02.setValue(idDominio.toString());
 		queryParams.add(queryParam02);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE CAT_DOMINIO SET Descripcion = ? WHERE Id = ?");
+		requestParams.put("sql", "UPDATE "+Constants.CAT_DOMINIO+" SET Descripcion = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -126,19 +142,23 @@ public class DominiosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeDomain(@PathVariable Integer id) {
+	/*
+	 * DELETE DOMINIO
+	 * Endpoint que elimina un dominio id.
+	 */
+	@RequestMapping(value = "/{idDominio}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeDomain(@PathVariable Integer idDominio) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idDominio.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM CAT_DOMINIO WHERE Id = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.CAT_DOMINIO+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;

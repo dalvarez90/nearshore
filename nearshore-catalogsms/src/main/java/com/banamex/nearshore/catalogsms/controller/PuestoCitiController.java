@@ -26,12 +26,16 @@ public class PuestoCitiController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 
+	/*
+	 * GET PUESTO(CITI)
+	 * El endpoint devuelve un listado de los nombres de los puestos de trabajo registrados para el personal de CitiBanamex. 
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllPuestosCiti() {
 		HashMap<String, Object> requestParams = new HashMap<>();
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTOCITI");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PUESTOCITI);
 		
 		Object resultBase = null;
 		try {
@@ -43,19 +47,23 @@ public class PuestoCitiController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrievePuestoCitiById(@PathVariable Integer id) {
+	/*
+	 * GET PUESTO(CITI)
+	 * Endpoint que devuelve un puesto de citi por idPuesto.
+	 */
+	@RequestMapping(value = "/{idPuesto}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrievePuestoCitiById(@PathVariable Integer idPuesto) {
 
 		HashMap<String, Object> requestParams = new HashMap<>();
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPuesto.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PUESTOCITI WHERE ID = ?");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PUESTOCITI+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -68,6 +76,10 @@ public class PuestoCitiController {
 		return resultBase;
 	}
 
+	/*
+	 * POST PUESTO(CITI)
+	 * Endpoint que agrega un nuevo puesto de citi.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newProveedor(@RequestBody Proveedor proveedor) {
 
@@ -82,7 +94,7 @@ public class PuestoCitiController {
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_PUESTOCITI (DESCRIPCION) values (?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PUESTOCITI+" (DESCRIPCION) values (?)");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -95,8 +107,12 @@ public class PuestoCitiController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editProveedor(@PathVariable Integer id, @RequestBody Proveedor proveedor) {
+	/*
+	 * PUT PUESTO(CITI)
+	 * Endpoint que actualiza un puesto de citi.
+	 */
+	@RequestMapping(value = "/{idPuesto}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editProveedor(@PathVariable Integer idPuesto, @RequestBody Proveedor proveedor) {
 
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
@@ -110,11 +126,11 @@ public class PuestoCitiController {
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("INT");
-		queryParam02.setValue(id.toString());
+		queryParam02.setValue(idPuesto.toString());
 		queryParams.add(queryParam02);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE CAT_PUESTOCITI SET Descripcion = ? WHERE id = ?");
+		requestParams.put("sql", "UPDATE "+Constants.CAT_PUESTOCITI+" SET Descripcion = ? WHERE id = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;
@@ -127,8 +143,12 @@ public class PuestoCitiController {
 		return resultBase;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeProveedor(@PathVariable Integer id) {
+	/*
+	 * DELETE PUESTO(CITI)
+	 * Endpoint que elimina un puesto de citi.
+	 */
+	@RequestMapping(value = "/{idPuesto}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeProveedor(@PathVariable Integer idPuesto) {
 
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
@@ -136,11 +156,11 @@ public class PuestoCitiController {
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPuesto.toString());
 		queryParams.add(queryParam01);
 
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM CAT_PUESTOCITI WHERE Id = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.CAT_PUESTOCITI+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 
 		Object resultBase = null;

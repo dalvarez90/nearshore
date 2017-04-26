@@ -27,6 +27,10 @@ public class UsuariosController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
+	/*
+	 * GET USUARIOS
+	 * Endpoint para obtiene una lista de Usuario que tienen acceso al sistema.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllDomains() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -34,7 +38,7 @@ public class UsuariosController {
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join CAT_PERFIL p on u.Id_Perfil=p.Id_Perfil");
+				+ "p.Id_Perfil,p.Descripcion FROM "+Constants.USUARIO+" u join "+Constants.CAT_PERFIL+" p on u.Id_Perfil=p.Id_Perfil");
 		
 		Object resultBase = null;
 		try {
@@ -46,21 +50,25 @@ public class UsuariosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveDomainById(@PathVariable Integer id) {
+	/*
+	 * GET USUARIOS
+	 * Endpoint para obtiene un usuario que tienen acceso al sistema por idUsuario.
+	 */
+	@RequestMapping(value = "/{idUsuario}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveDomainById(@PathVariable Integer idUsuario) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idUsuario.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
 		requestParams.put("sql", "SELECT u.Id_usuarios, u.Email, u.Primer_Nombre, u.Segundo_Nombre,"
 				+ "u.Apellido_Paterno, u.ApellidoMaterno, u.Clave,u.Activo,u.Dominios,u.Proveedores,"
-				+ "p.Id_Perfil,p.Descripcion FROM USUARIO u join CAT_PERFIL p on u.Id_Perfil=p.Id_Perfil"
+				+ "p.Id_Perfil,p.Descripcion FROM "+Constants.USUARIO+" u join "+Constants.CAT_PERFIL+" p on u.Id_Perfil=p.Id_Perfil"
 				+ " where u.Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
@@ -74,12 +82,15 @@ public class UsuariosController {
 		return resultBase;
 	}
 	
+	/*
+	 * POST USUARIOS
+	 * Endpoint para insertar un usuario que tienen acceso al sistema.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newDomain(@RequestBody Usuario usuario) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
-		
 		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
@@ -142,7 +153,7 @@ public class UsuariosController {
 		queryParams.add(queryParam10);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO USUARIO (email,"
+		requestParams.put("sql", "INSERT INTO "+Constants.USUARIO+" (email,"
 				+ "Primer_Nombre,Segundo_Nombre,Apellido_Paterno,ApellidoMaterno,"
 				+ "Clave,Id_perfil,Activo,Dominios,Proveedores) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		requestParams.put("data", queryParams);
@@ -157,12 +168,15 @@ public class UsuariosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editDomain(@PathVariable Integer id, @RequestBody Usuario usuario) {
+	/*
+	 * PUT USUARIOS
+	 * Endpoint para la edición de la información de un usuario del sistema.
+	 */
+	@RequestMapping(value = "/{idUsuario}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editDomain(@PathVariable Integer idUsuario, @RequestBody Usuario usuario) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
-		
 		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
@@ -227,13 +241,13 @@ public class UsuariosController {
 		Data queryParam11 = new Data();
 		queryParam11.setIndex(11);
 		queryParam11.setType("INT");
-		queryParam11.setValue(id.toString());
+		queryParam11.setValue(idUsuario.toString());
 		queryParams.add(queryParam11);
 
 		
 		requestParams.put("tipoQuery", 1);
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE USUARIO SET Email = ?,Primer_Nombre = ?,"
+		requestParams.put("sql", "UPDATE "+Constants.USUARIO+" SET Email = ?,Primer_Nombre = ?,"
 				+ "Segundo_Nombre = ?, Apellido_Paterno = ?,ApellidoMaterno = ?,"
 				+ "Clave = ?, Id_Perfil = ?, Activo= ?, Dominios = ?, Proveedores= ?"
 				+ " WHERE Id_Usuarios = ?");
@@ -249,19 +263,23 @@ public class UsuariosController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeDomain(@PathVariable Integer id) {
+	/*
+	 * DELETE USUARIOS
+	 * Endpoint para eliminar la cuenta de un usuario del sistema.
+	 */
+	@RequestMapping(value = "/{idUsuario}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeDomain(@PathVariable Integer idUsuario) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idUsuario.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM USUARIO WHERE Id_Usuarios = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.USUARIO+" WHERE Id_Usuarios = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;

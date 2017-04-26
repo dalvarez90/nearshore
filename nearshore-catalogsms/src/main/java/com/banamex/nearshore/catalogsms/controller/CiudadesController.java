@@ -26,6 +26,10 @@ public class CiudadesController{
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
+	/*
+	 * GET CIUDADES
+	 * El endpoint aplicaciones devuelve un listado de ciudades.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllCities() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -43,15 +47,19 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveCityById(@PathVariable Integer id) {
+	/*
+	 * GET CIUDADES
+	 * Devuelve una ciudad por id.
+	 */
+	@RequestMapping(value = "/{idCiudad}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveCityById(@PathVariable Integer idCiudad) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idCiudad.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
@@ -68,15 +76,19 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/paises/{id}/ciudades", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveCityByIdCountry(@PathVariable Integer id) {
+	/*
+	 * GET CIUDADES
+	 * Devuelve las ciudades de determinado país.
+	 */
+	@RequestMapping(value = "/paises/{idPais}/ciudades", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveCityByIdCountry(@PathVariable Integer idPais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPais.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
@@ -93,19 +105,20 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	
-	@RequestMapping(value = "/paises/{id}/ciudades", method = RequestMethod.POST, produces = "application/json")
-	public Object newCity(@RequestBody Ciudad ciudad, @PathVariable Integer id) {
+	/*
+	 * POST CIUDADES
+	 * El endpoint que agrega una nueva ciudad a un país determinado.
+	 */
+	@RequestMapping(value = "/paises/{idPais}/ciudades", method = RequestMethod.POST, produces = "application/json")
+	public Object newCity(@RequestBody Ciudad ciudad, @PathVariable Integer idPais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		
-		
-		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPais.toString());
 		queryParams.add(queryParam01);
 		
 		Data queryParam02 = new Data();
@@ -128,8 +141,12 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editCity(@PathVariable Integer id, @RequestBody Ciudad ciudad) {
+	/*
+	 * PUT CIUADES
+	 * Edita la información de una ciudad.
+	 */
+	@RequestMapping(value = "/{idCiudad}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editCity(@PathVariable Integer idCiudad, @RequestBody Ciudad ciudad) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -148,7 +165,7 @@ public class CiudadesController{
 		Data queryParam03 = new Data();
 		queryParam03.setIndex(3);
 		queryParam03.setType("INT");
-		queryParam03.setValue(id.toString());
+		queryParam03.setValue(idCiudad.toString());
 		queryParams.add(queryParam03);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
@@ -165,15 +182,19 @@ public class CiudadesController{
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeCity(@PathVariable Integer id) {
+	/*
+	 * DELETE CIUDADES
+	 * Endpoint para eliminar una ciudad por id.
+	 */
+	@RequestMapping(value = "/{idCiudad}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeCity(@PathVariable Integer idCiudad) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idCiudad.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);

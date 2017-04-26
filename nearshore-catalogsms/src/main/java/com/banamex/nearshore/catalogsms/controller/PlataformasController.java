@@ -26,6 +26,11 @@ public class PlataformasController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 	
+	/*
+	 * GET PLATAFORMAS
+	 * El endpoint devuelve un listado de los nombres de las diferentes plataformas
+	 * disponibles para el desarrollo de las aplicaciones de CitiBanamex.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllPlatforms() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
@@ -43,15 +48,19 @@ public class PlataformasController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrievePlatformById(@PathVariable Integer id) {
+	/*
+	 * GET PLATAFORMAS
+	 * Devuelve una plataforma por id.
+	 */
+	@RequestMapping(value = "/{idPlataforma}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrievePlatformById(@PathVariable Integer idPlataforma) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPlataforma.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
@@ -68,14 +77,16 @@ public class PlataformasController {
 		return resultBase;
 	}
 	
-	
+	/*
+	 * POST PLATAFORMAS
+	 * Endpoint que agrega una nueva plataforma.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newPlatform(@RequestBody Plataforma plataforma) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		
-	
 		Data queryParam01= new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("STRING");
@@ -102,8 +113,12 @@ public class PlataformasController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editPlatform(@PathVariable Integer id, @RequestBody Plataforma plataforma) {
+	/*
+	 * PUT PLATAFORMAS
+	 * Edita informacdion de una plataforma.
+	 */
+	@RequestMapping(value = "/{idPlataforma}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editPlatform(@PathVariable Integer idPlataforma, @RequestBody Plataforma plataforma) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -122,7 +137,7 @@ public class PlataformasController {
 		Data queryParam03 = new Data();
 		queryParam03.setIndex(3);
 		queryParam03.setType("INT");
-		queryParam03.setValue(id.toString());
+		queryParam03.setValue(idPlataforma.toString());
 		queryParams.add(queryParam03);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
@@ -139,15 +154,19 @@ public class PlataformasController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removePlatform(@PathVariable Integer id) {
+	/*
+	 * DELETE PLATAFORMAS
+	 * Endpoint que elimina una plataforma por id.
+	 */
+	@RequestMapping(value = "/{idPlataforma}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removePlatform(@PathVariable Integer idPlataforma) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPlataforma.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);

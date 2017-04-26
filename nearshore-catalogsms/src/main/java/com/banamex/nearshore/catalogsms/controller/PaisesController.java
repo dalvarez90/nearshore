@@ -26,12 +26,16 @@ public class PaisesController {
 	@Autowired
 	private DatabaseMicroserviceClientService databaseMicroserviceClientService;
 
+	/*
+	 * GET PAISES
+	 * Listado de paises.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
 	public Object retrieveAllCountry() {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PAIS");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PAIS);
 		
 		Object resultBase = null;
 		try {
@@ -43,19 +47,23 @@ public class PaisesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	public Object retrieveCountryById(@PathVariable Integer id) {
+	/*
+	 * GET PAISES
+	 * Endpoint que devuelve un pais por id.
+	 */
+	@RequestMapping(value = "/{idPais}", method = RequestMethod.GET, produces = "application/json")
+	public Object retrieveCountryById(@PathVariable Integer idPais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPais.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.QUERY_STATEMENT_TYPE);
-		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM CAT_PAIS WHERE ID = ?");
+		requestParams.put("sql", "SELECT ID, DESCRIPCION FROM "+Constants.CAT_PAIS+" WHERE ID = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -68,12 +76,14 @@ public class PaisesController {
 		return resultBase;
 	}
 	
+	/*
+	 * POST PAISES
+	 * Endpoint que agrega un nuevo pais.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public Object newCountry(@RequestBody Pais pais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		List<Data> queryParams = new ArrayList<>();
-		
-		
 		
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
@@ -82,7 +92,7 @@ public class PaisesController {
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "INSERT INTO CAT_PAIS (Descripcion) VALUES (?)");
+		requestParams.put("sql", "INSERT INTO "+Constants.CAT_PAIS+" (Descripcion) VALUES (?)");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -95,8 +105,12 @@ public class PaisesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public Object editCountry(@PathVariable Integer id, @RequestBody Pais pais) {
+	/*
+	 * PUT PAISES
+	 * Edita la informacion de un pais.
+	 */
+	@RequestMapping(value = "/{idPais}", method = RequestMethod.PUT, produces = "application/json")
+	public Object editCountry(@PathVariable Integer idPais, @RequestBody Pais pais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
@@ -109,11 +123,11 @@ public class PaisesController {
 		Data queryParam02 = new Data();
 		queryParam02.setIndex(2);
 		queryParam02.setType("INT");
-		queryParam02.setValue(id.toString());
+		queryParam02.setValue(idPais.toString());
 		queryParams.add(queryParam02);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "UPDATE CAT_PAIS SET Descripcion = ? WHERE Id = ?");
+		requestParams.put("sql", "UPDATE "+Constants.CAT_PAIS+" SET Descripcion = ? WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
@@ -126,19 +140,23 @@ public class PaisesController {
 		return resultBase;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public Object removeCountry(@PathVariable Integer id) {
+	/*
+	 * DELETE PAISES
+	 * Endpoint que elimina un pais por id.
+	 */
+	@RequestMapping(value = "/{idPais}", method = RequestMethod.DELETE, produces = "application/json")
+	public Object removeCountry(@PathVariable Integer idPais) {
 		HashMap<String, Object> requestParams = new HashMap<String, Object>();
 		
 		List<Data> queryParams = new ArrayList<>();
 		Data queryParam01 = new Data();
 		queryParam01.setIndex(1);
 		queryParam01.setType("INT");
-		queryParam01.setValue(id.toString());
+		queryParam01.setValue(idPais.toString());
 		queryParams.add(queryParam01);
 		
 		requestParams.put("tipoQuery", Constants.UPDATE_STATEMENT_TYPE);
-		requestParams.put("sql", "DELETE FROM CAT_PAIS WHERE Id = ?");
+		requestParams.put("sql", "DELETE FROM "+Constants.CAT_PAIS+" WHERE Id = ?");
 		requestParams.put("data", queryParams);
 		
 		Object resultBase = null;
