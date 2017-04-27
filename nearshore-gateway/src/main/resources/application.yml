@@ -1,4 +1,9 @@
 variables:
+  redis:
+    #host: localhost
+    host: hostRedis
+    port: 6379
+    password:
   eureka:
     #host: localhost
     host: hostEureka
@@ -19,6 +24,9 @@ spring:
     name: nearshore-gateway
   session:
     store-type: redis
+  redis:
+    host: ${variables.redis.host}
+    port: ${variables.redis.port}
  
     
 zuul:
