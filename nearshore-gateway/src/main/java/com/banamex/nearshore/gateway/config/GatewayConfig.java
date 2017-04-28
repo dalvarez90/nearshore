@@ -2,6 +2,7 @@ package com.banamex.nearshore.gateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,6 +30,8 @@ public class GatewayConfig extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 			.and()
 				.logout()
+			.and()
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
 			.and()
 				.authorizeRequests().anyRequest().authenticated()
 			.and()
