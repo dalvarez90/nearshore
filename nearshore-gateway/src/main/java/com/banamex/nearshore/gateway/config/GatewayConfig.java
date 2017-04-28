@@ -2,10 +2,10 @@ package com.banamex.nearshore.gateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.session.web.http.HttpSessionStrategy;
 
@@ -31,9 +31,11 @@ public class GatewayConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.logout()
 			.and()
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
+			.and()
 				.authorizeRequests().anyRequest().authenticated()
 			.and()
-				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+				.csrf().disable();
 	}
 	
 }
